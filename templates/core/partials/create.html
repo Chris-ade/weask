@@ -1,0 +1,36 @@
+{% extends 'wrapper.html' %}
+{% load widget_tweaks humanize static %}
+{% block content %}
+<div class="ui-compose-container ui-block">
+
+<div class="row">
+<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+<div class="ui-compose-title">
+<h2 class="text-xl font-bold">Ask a question</h2>
+<span> Which will be visible under the category you chose.</span>
+</div>
+</div>
+
+<div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+<form method="post" id="post_form">
+<div class="form-group label-floating is-empty">
+<label class="control-label">Title</label>
+{% render_field form.title class="form-control" %}
+<p class="material-input"></p>
+</div>
+<div class="form-group label-floating is-empty">
+<label class="control-label">What do you want to ask in full?</label>
+{% render_field form.content class="form-control" cols="100" rows="3" %}
+<p class="material-input"></p>
+</div>
+<div class="form-group label-floating">
+<label class="control-label">Select a category</label>
+{% render_field form.category class="ui-select form-control w-full" %}
+</div>
+<button class="uk-button uk-button-primary w-full" type="submit">Submit</button>
+</form>
+</div>
+</div>
+
+</div>
+{% endblock %}

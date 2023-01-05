@@ -1,0 +1,113 @@
+{% extends 'wrapper.html' %}
+{% load widget_tweaks static filters %}
+{% block content %}
+<section class="container sidebar-boxed py-4" id="question-view">
+{% if question %}
+{% with q=question %}
+<div class="tabs question-tabs is-centered">
+<a class="uk-button" href="{% url 'core:questions' slug=q.category.slug %}">
+<svg class="icon icon--20" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6"></path><path d="M21 12H4"></path><path stroke-linecap="round" d="M3 12h1"></path></svg>
+</a>
+<ul>
+<li class="is-active"><a>{{ q.category.name }}</a></li>
+</ul>
+</div>
+<div class="question-content is-view" id="question{{q.id}}">
+<div class="question-block">
+<a class="question-title is-link">{{ q.title }}</a>
+<div class="question-block-inner" id="question-content{{ q.id }}">
+<div class="question-author">
+<img src="{{ q.asked_by.avatar.url }}" alt="{{ q.asked_by.username }}'s picture">
+<div class="meta">
+<span>{{ q.asked_by.name }} <span class="username">#{{ q.asked_by.username }}</span></span>
+<span>{{ q.created_at|custom_date }}</span>
+</div>
+<div class="question-action-button">
+<a class="like-button" hx-post="{% url 'core:like' target=q.id %}" hx-target="#question-content{{ q.id }}" hx-vals='{"view": 1}' hx-swap="outerHTML">
+<svg role="img" class="icon {% if request.user in q.likes.all %}liked{% endif %}" viewBox="0 0 24 24"><path d="M12,21 L10.55,19.7051771 C5.4,15.1242507 2,12.1029973 2,8.39509537 C2,5.37384196 4.42,3 7.5,3 C9.24,3 10.91,3.79455041 12,5.05013624 C13.09,3.79455041 14.76,3 16.5,3 C19.58,3 22,5.37384196 22,8.39509537 C22,12.1029973 18.6,15.1242507 13.45,19.7149864 L12,21 Z"></path></svg>
+</a>
+</div>
+</div>
+
+<div class="question-text">
+<p> {{ q.content }} </p>
+</div>
+<div class="question-footer">
+<div class="likes">
+<svg role="img" class="icon icon--16" viewBox="0 0 24 24"><path d="M12,21 L10.55,19.7051771 C5.4,15.1242507 2,12.1029973 2,8.39509537 C2,5.37384196 4.42,3 7.5,3 C9.24,3 10.91,3.79455041 12,5.05013624 C13.09,3.79455041 14.76,3 16.5,3 C19.58,3 22,5.37384196 22,8.39509537 C22,12.1029973 18.6,15.1242507 13.45,19.7149864 L12,21 Z"></path></svg>
+<span>{{ q.likes.count }}</span>
+</div>
+<div class="answers-count">
+<svg class="icon icon--16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+<span>{{ q.answer_set.count }}</span></div>
+</div>
+</div>
+</div>
+
+<div class="new-answer-block">
+<form class="w-full" method="post" hx-post="{% url 'core:post-answer' %}" hx-target="#answer-container" hx-swap="afterbegin">
+{% render_field form.target type="hidden" value=q.id %}
+{% render_field form.content placeholder="Write an answer..." %}
+<button type="submit" class="uk-button uk-button-default">Post</button>
+</form>
+</div>
+
+<div class="answer-container" id="answer-container">
+{% for ans in q.answer_set.all %}
+<div class="answer-block {% if ans.accepted %}is-best{% endif %}" id="answer{{ ans.id }}">
+<div class="answer-author">
+<div class="avatar-wrap">
+<img class="avatar" src="{{ ans.by.avatar.url }}" alt="{{ ans.by.username}}'s picture">
+<div class="accepted-icon">
+<svg class="icon" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+<polyline points="7 13 10 16 17 9"></polyline>
+<circle cx="12" cy="12" r="10"></circle>
+</svg>
+</div>
+</div>
+<div class="action-buttons">
+<a class="upvote-button" hx-get="{% url 'core:like-answer' target=ans.id %}" hx-target="#answer{{ans.id}}" hx-swap="outerHTML">
+<svg role="img" class="icon {% if request.user in ans.likes.all %}is-liked{% endif %}" viewBox="0 0 24 24"><path d="M12,21 L10.55,19.7051771 C5.4,15.1242507 2,12.1029973 2,8.39509537 C2,5.37384196 4.42,3 7.5,3 C9.24,3 10.91,3.79455041 12,5.05013624 C13.09,3.79455041 14.76,3 16.5,3 C19.58,3 22,5.37384196 22,8.39509537 C22,12.1029973 18.6,15.1242507 13.45,19.7149864 L12,21 Z"></path></svg>
+</a>
+{% if q.asked_by == request.user %}
+{% if not has_accepted %}
+<a class="accept-button {% if ans.accepted %}accepted{% endif %}" hx-post="{% url 'core:accept' target=ans.id %}" hx-vals='{"question": {{ q.id }}}' hx-target="#answer{{ans.id}}" hx-swap="outerHTML">
+<svg role="img" class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-labelledby="accept-icon">
+<title id="accept-icon">Accept answer</title>
+<polyline points="4 13 9 18 20 7"></polyline>
+</svg>
+</a>
+{% endif %}
+{% endif %}
+</div>
+</div>
+
+<div class="answer-content">
+<div class="meta">
+<span>{{ ans.by.name }} {% if ans.accepted %}
+<small class="best-tag">Best Answer</small>{% endif %}
+</span>
+<span>#{{ ans.by.username }}</span>
+</div>
+
+<div class="answer-text">
+<p>{{ ans.content }}</p>
+</div>
+
+<div class="answer-footer">
+<div class="upvote">
+<svg role="img" class="icon icon--16" viewBox="0 0 24 24"><path d="M12,21 L10.55,19.7051771 C5.4,15.1242507 2,12.1029973 2,8.39509537 C2,5.37384196 4.42,3 7.5,3 C9.24,3 10.91,3.79455041 12,5.05013624 C13.09,3.79455041 14.76,3 16.5,3 C19.58,3 22,5.37384196 22,8.39509537 C22,12.1029973 18.6,15.1242507 13.45,19.7149864 L12,21 Z"></path></svg>
+<span>{{ ans.likes.count }}</span>
+</div>
+<div class="time">{{ ans.created_at|custom_date }}</div>
+</div>
+</div>
+</div>
+{% empty %}
+{% endfor %}
+</div>
+</div>
+{% endwith %}
+{% endif %}
+</section>
+{% endblock %}

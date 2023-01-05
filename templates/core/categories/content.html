@@ -1,0 +1,160 @@
+{% extends 'wrapper.html' %}
+{% load widget_tweaks humanize static %}
+{% block content %}
+<section class="container sidebar-boxed">
+<div class="notification-box notification-box-extra notification-box-success mt-2 p-3">
+<p>Here is a list of all the available categories. </p>
+<p> Click a category to see questions under it.</p>
+<div class="notification-close notification-close-error"></div>
+</div>
+{% if categories %}
+<div class="questions-wrap is-smaller">
+<div class="question-content">
+<div class="row">
+<div class="col">
+<div class="tile is-ancestor categories-tile-grid">
+<div class="tile is-vertical is-8">
+<div class="tile">
+<div class="tile is-parent is-vertical">
+<a class="tile is-child category-box" href="{% url 'core:questions' slug='sci-and-tech' %}">
+<img src="{% static 'icons/lightbulb.svg' %}" alt="">
+<div class="box-content">
+<h3 class="title is-6">Science & Technology</h3>
+<p> A forum to explore and ask questions about science and technology and other related stuff. </p>
+</div>
+</a>
+<a class="tile is-child category-box" href="{% url 'core:questions' slug='books' %}">
+<img src="{% static 'icons/book.svg' %}" alt="">
+<div class="box-content">
+<h3 class="title is-6">Books & Reading</h3>
+<p> A forum to explore and ask questions about books, literature and other related stuff. </p>
+</div>
+</a>
+</div>
+
+<div class="tile is-parent is-vertical">
+<a class="tile is-child category-box" href="{% url 'core:questions' slug='movies' %}">
+<img src="{% static 'icons/tv.svg' %}" alt="">
+<div class="box-content">
+<h3 class="title is-6">Movies & TV Series</h3>
+<p> A forum to explore and ask questions about movies, tv series and other related stuff. </p>
+</div>
+</a>
+<a class="tile is-child category-box" href="{% url 'core:questions' slug='general' %}">
+<img src="{% static 'icons/chat-alt.svg' %}" alt="">
+<div class="box-content">
+<h3 class="title is-6">General</h3>
+<p> A forum to explore and ask questions about anything in general. </p>
+</div>
+</a>
+</div>
+</div>
+<div class="tile is-parent">
+<a class="tile is-child category-box" href="{% url 'core:questions' slug='sports-and-fitness' %}">
+<img src="{% static 'icons/basketball.svg' %}" alt="">
+<div class="box-content">
+<h3 class="title is-6">Sports & Fitness</h3>
+<p> A forum to see and ask questions about sports, fitness, healthy lifestyles and other related stuff. </p>
+</div>
+</a>
+</div>
+</div>
+<div class="tile is-parent is-vertical">
+<a class="tile is-child category-box is-taller" href="{% url 'core:questions' slug='travels' %}">
+<img src="{% static 'icons/plane.svg' %}" alt="">
+<div class="box-content">
+<h3 class="title is-6">Travels</h3>
+<p> A forum to explore and ask questions about traveling and other related stuff. </p>
+</div>
+</a>
+<a class="tile is-child category-box is-taller" href="{% url 'core:questions' slug='business' %}">
+<img src="{% static 'icons/suitcase.svg' %}" alt="">
+<div class="box-content">
+<h3 class="title is-6">Business</h3>
+<p> A forum to explore and ask questions about business, business ideas and other related stuff. </p>
+</div>
+</a>
+</div>
+</div>
+
+<div class="tile is-ancestor">
+<div class="tile is-parent is-vertical">
+<a class="tile is-child category-box is-taller" href="{% url 'core:questions' slug='programming' %}">
+<img src="{% static 'icons/code-alt.svg' %}" alt="">
+<div class="box-content">
+<h3 class="title is-6">Programming</h3>
+<p> A forum to explore and ask questions about programming, coding and other related stuff. </p>
+</div>
+</a>
+<a class="tile is-child category-box is-taller" href="{% url 'core:questions' slug='automotives' %}">
+<img src="{% static 'icons/bike.svg' %}" alt="">
+<div class="box-content">
+<h3 class="title is-6">Cars & Automotives</h3>
+<p> A forum to explore and ask questions about cars, automotives and other related stuff. </p>
+</div>
+</a>
+</div>
+<div class="tile is-vertical is-8">
+<div class="tile">
+<div class="tile is-parent is-vertical">
+<a class="tile is-child category-box" href="{% url 'core:questions' slug='relationships' %}">
+<img src="{% static 'icons/favourite.svg' %}" alt="">
+<div class="box-content">
+<h3 class="title is-6">Relationships</h3>
+<p> A forum to explore and ask questions about relationships, dating and other related stuff. </p>
+</div>
+</a>
+<a class="tile is-child category-box" href="{% url 'core:questions' slug='graphics' %}">
+<img src="{% static 'icons/aperture.svg' %}" alt="">
+<div class="box-content">
+<h3 class="title is-6">Graphics & Designs</h3>
+<p> A forum to explore and ask questions about graphics, UI/UX designs and other related stuff </p>
+</div>
+</a>
+</div>
+<div class="tile is-parent is-vertical">
+<a class="tile is-child category-box" href="{% url 'core:questions' slug='health' %}">
+<img src="{% static 'icons/activity.svg' %}" alt="">
+<div class="box-content">
+<h3 class="title is-6">Health</h3>
+<p> A forum to explore and ask questions about health, health issues, medicines and other related stuff</p>
+</div>
+</a>
+<a class="tile is-child category-box" href="{% url 'core:questions' slug='entertainment' %}">
+<img src="{% static 'icons/music.svg' %}" alt="">
+<div class="box-content">
+<h3 class="title is-6">Entertainment</h3>
+<p> A forum to explore and ask questions about musics, entertainment related stuff </p>
+</div>
+</a>
+</div>
+</div>
+<div class="tile is-parent">
+<a class="tile is-child category-box" href="{% url 'core:questions' slug='astronomy' %}">
+<img src="{% static 'icons/rocket.svg' %}" class="" alt="">
+<div class="box-content is-6">
+<h3 class="title">Astronomy</h3>
+<p> A forum to explore and ask questions about astrology, space and other related stuff. </p>
+</div>
+</a>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+{% else %}
+<div class="p-4">
+<h3 class="text-xl font-bold">You're all caught up</h3>
+<div class="mt-2">
+<p>
+Questions categories will show up here.
+</p>
+</div>
+</div>
+{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% load widget_tweaks static filters %}
+<div class="ui-search-header">
+<h5 class="font-bold text-xl"> Result </h5>
+<span> Found {{ no_results }} {{ context }}</span></div>
+{% if questions %}
+{% for q in questions %}
+<div class="ui-search">
+<span><a href="{% url 'core:view' slug=q.category.slug pk=q.id %}">{{ q.title }} </a></span>
+<div class="stats">
+<span>Posted {{ q.created_at|custom_date }} ago</span>
+</div>
+<div class="ui-search-footer">
+<div class="ui-count">
+<div>
+<svg role="img" class="icon {% if request.user in q.likes.all %}is-liked{% endif %}" viewBox="0 0 24 24"><path d="M12,21 L10.55,19.7051771 C5.4,15.1242507 2,12.1029973 2,8.39509537 C2,5.37384196 4.42,3 7.5,3 C9.24,3 10.91,3.79455041 12,5.05013624 C13.09,3.79455041 14.76,3 16.5,3 C19.58,3 22,5.37384196 22,8.39509537 C22,12.1029973 18.6,15.1242507 13.45,19.7149864 L12,21 Z"></path></svg> {{ q.likes.count }}
+</div>
+<div>
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> {{ q.answer_set.count }}
+</div>
+</div>
+<div>
+<svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 13H9V16H15V13H21"></path>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M3 13L5 4H19L21 13V20H3V13Z"></path>
+<path d="M7 7H17"></path>
+<path d="M6.5 10H17.5"></path>
+</svg> {{ q.category.name }} 
+</div>
+
+</div>
+</div>
+{% endfor %}
+{% elif categories %}
+{% for c in categories %}
+<div class="ui-search ui-category">
+<a href="{% url 'core:questions' slug=c.slug  %}">{{ c.name }}</a>
+<div class="ui-search-footer mt-2">
+<div class="ui-count">
+<div>
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> {{ c.question_set.count }}
+</div>
+</div>
+<div></div>
+
+</div>
+</div>
+{% endfor %}
+{% elif users %}
+{% for u in users %}
+<div class="ui-search ui-user">
+<div class="ui-thumb">
+<img src="{{ u.avatar.url }}">
+</div>
+<div class="ui-details">
+<a href="{% url 'accounts:profile' username=u.username %}">{{ u.name }} <span>#{{ u.username }}</span>
+</a>
+<div class="ui-search-footer">
+<div>Questions: {{ u.question_set.count }}</div>
+<div>Answers: {{ u.answer_set.count }}</div>
+</div>
+</div>
+
+</div>
+{% endfor %}
+{% else %}
+<div class="ui-search no-contents">
+<h2>Nothing was found for your search.</h2>
+<div class="mt-1">Try another search.</div>
+</div>
+{% endif %}

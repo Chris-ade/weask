@@ -1,0 +1,52 @@
+{% load widget_tweaks static humanize filters %}
+{% with ans=answer %}
+<div class="answer-block {% if ans.accepted %}is-best{% endif %}" id="answer{{ ans.id }}">
+<div class="answer-author">
+<div class="avatar-wrap">
+<img class="avatar" src="{{ ans.by.avatar.url }}" alt="{{ ans.by.username}}'s picture">
+<div class="accepted-icon">
+<svg class="icon" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+<polyline points="7 13 10 16 17 9"></polyline>
+<circle cx="12" cy="12" r="10"></circle>
+</svg>
+</div>
+</div>
+<div class="action-buttons">
+<a class="upvote-button" hx-get="{% url 'core:like-answer' target=ans.id %}" hx-target="#answer{{ans.id}}" hx-swap="outerHTML">
+<svg role="img" class="icon {% if request.user in ans.likes.all %}is-liked{% endif %}" viewBox="0 0 24 24"><path d="M12,21 L10.55,19.7051771 C5.4,15.1242507 2,12.1029973 2,8.39509537 C2,5.37384196 4.42,3 7.5,3 C9.24,3 10.91,3.79455041 12,5.05013624 C13.09,3.79455041 14.76,3 16.5,3 C19.58,3 22,5.37384196 22,8.39509537 C22,12.1029973 18.6,15.1242507 13.45,19.7149864 L12,21 Z"></path></svg>
+</a>
+{% if q.asked_by == request.user %}
+{% if not has_accepted %}
+<a class="accept-button {% if ans.accepted %}accepted{% endif %}" hx-post="{% url 'core:accept' target=ans.id %}" hx-vals='{"question": {{ q.id }}}' hx-target="#answer{{ans.id}}" hx-swap="outerHTML">
+<svg role="img" class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-labelledby="accept-icon">
+<title id="accept-icon">Accept answer</title>
+<polyline points="4 13 9 18 20 7"></polyline>
+</svg>
+</a>
+{% endif %}
+{% endif %}
+</div>
+</div>
+
+<div class="answer-content">
+<div class="meta">
+<span>{{ ans.by.name }} {% if ans.accepted %}
+<small class="best-tag">Best Answer</small>{% endif %}
+</span>
+<span>#{{ ans.by.username }}</span>
+</div>
+
+<div class="answer-text">
+<p>{{ ans.content }}</p>
+</div>
+
+<div class="answer-footer">
+<div class="upvote">
+<svg role="img" class="icon icon--16" viewBox="0 0 24 24"><path d="M12,21 L10.55,19.7051771 C5.4,15.1242507 2,12.1029973 2,8.39509537 C2,5.37384196 4.42,3 7.5,3 C9.24,3 10.91,3.79455041 12,5.05013624 C13.09,3.79455041 14.76,3 16.5,3 C19.58,3 22,5.37384196 22,8.39509537 C22,12.1029973 18.6,15.1242507 13.45,19.7149864 L12,21 Z"></path></svg>
+<span>{{ ans.likes.count }}</span>
+</div>
+<div class="time">{{ ans.created_at|custom_date }}</div>
+</div>
+</div>
+</div>
+{% endwith %}
