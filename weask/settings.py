@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-+8*p15zxx@8pv^3*7)&(zc=6li^6s@-sf%5&um+c0pvuo01-by
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost', 'weask.bytecodevision.tech']
 
 # Application definition
 
@@ -25,7 +25,6 @@ INSTALLED_APPS = [
     'api',
     'accounts',
     'core',
-    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
