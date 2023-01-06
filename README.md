@@ -11,8 +11,11 @@
 
 ## Installation
 
-To clone and run this application, you'll need [Python](https://www.python.org/downloads/release/python-3111/) (which comes with [pip](https://pip.pypa.io/en/stable/)) installed on your computer. From your command line:
+To clone and run this application, you'll need [Python](https://www.python.org/downloads/release/python-3111/) (which comes with [pip](https://pip.pypa.io/en/stable/)) installed on your computer. 
 
+This app uses the default SQLite database.
+
+From your command line:
 ```bash
 # Clone this repository
 $ git clone https://github.com/Chris-ade/weask
