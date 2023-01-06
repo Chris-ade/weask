@@ -33,6 +33,9 @@ $ python manage.py migrate
 # Run the server
 $ python manage.py runserver
 ```
-
 > **Note**
 > If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `python` from the command prompt.
+
+## Usage
+
+Navigate to localhost:8000/ on your browser to see the app in action.
