@@ -30,9 +30,6 @@
 .category-box.is-row .box-content {
   padding-left: 40px;
 }
-.category-box.is-taller {
-    padding: 0px 30px 30px 30px;
-}
 .category-box.is-taller img {
   margin: auto !important;
   min-height: 140px;
@@ -63,17 +60,6 @@
   opacity: .6;
   transition: all .3s;
 }
-.category-box i {
-  display: block;
-  margin: 0 auto;
-  font-size: 4em;
-  margin-bottom: 30px;
-  -webkit-filter: grayscale(1);
-  filter: grayscale(1);
-  opacity: .6;
-  -webkit-transition: all .3s;
-  transition: all .3s;
-}
 .category-box:hover {
   text-decoration: none;
   border-width: 2px;
@@ -90,7 +76,6 @@
 }
 .tile {
   align-items: stretch;
-  display: flex;
   flex-basis: 0;
   flex-grow: 1;
   flex-shrink: 1;
@@ -201,10 +186,8 @@
   }
 }
 .question-content {
-  max-height: 100%;
   max-width: 680px;
   margin-bottom: 18px;
-  width: 100%;
 }
 .question-content.is-large {
   max-width: 840px;
