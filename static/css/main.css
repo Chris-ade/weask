@@ -156,7 +156,7 @@ svg.icon.icon--white {
   position: absolute;
   right: 5px;
   top: 5px;
-  background: url(images/icons/close.png) no-repeat center left;
+  background: url(../images/icons/close.png) no-repeat center left;
   background-size: 17px;
   width: 17px;
   height: 17px;
