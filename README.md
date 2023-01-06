@@ -38,4 +38,5 @@ $ python manage.py runserver
 
 ## Usage
 
-Navigate to localhost:8000/ on your browser to see the app in action.
+Navigate to http://localhost:8000/ on your browser to see the app in action.
+If everything goes right, you'll see the welcome page.
