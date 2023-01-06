@@ -15,17 +15,21 @@ To clone and run this application, you'll need [Python](https://www.python.org/d
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/amitmerchant1990/electron-markdownify
+$ git clone https://github.com/Chris-ade/weask
 
 # Go into the repository
-$ cd electron-markdownify
+$ cd weask
 
 # Install dependencies
-$ npm install
+$ pip install -r requirements.txt
 
-# Run the app
-$ npm start
+# Run migrations
+$ python manage.py makemigrations
+$ python manage.py migrate
+
+# Run the server
+$ python manage.py runserver
 ```
 
 > **Note**
-> If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
+> If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `python` from the command prompt.
