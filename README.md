@@ -57,7 +57,7 @@ If everything goes right, you'll see the welcome page.
 
 ## Contributing
 
-WeAsk is an open-source portfolio project. I'll highly appreciate any contributions. Whether you are helping me fix bugs, proposing new features, improving the app or spreading the word - I would love to have you as a part of the contributors.
+WeAsk is a portfolio project. I'll highly appreciate any contributions. Whether you are helping me fix bugs, proposing new features, improving the app one way or the other - I would love to have you as a part of the contributors.
 
 ## License
 
