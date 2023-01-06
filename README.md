@@ -41,6 +41,10 @@ $ python manage.py runserver
 Navigate to http://localhost:8000/ on your browser to see the app in action.
 If everything goes right, you'll see the welcome page.
 
+## Contributing
+
+WeAsk is an open-source portfolio project. I'll highly appreciate any contributions. Whether you are helping me fix bugs, proposing new features, improving the app or spreading the word - I would love to have you as a part of the contributors.
+
 ## License
 
 MIT
