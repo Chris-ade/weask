@@ -8,6 +8,7 @@
 <img width="350" src="docs/images/shot-4.png">
 <img width="350" src="docs/images/shot-5.png">
 <img width="350" src="docs/images/shot-6.png">
+<img width="350" src="docs/images/shot-8.png">
 <img width="350" src="docs/images/shot-7.png">
 
 ## Links
