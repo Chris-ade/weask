@@ -40,3 +40,12 @@ $ python manage.py runserver
 
 Navigate to http://localhost:8000/ on your browser to see the app in action.
 If everything goes right, you'll see the welcome page.
+
+## License
+
+MIT
+
+---
+> LinkedIn [@Chris Adebiyi](https://www.linkedin.com/in/chris-adebiyi-266639189) <br>
+> GitHub [@Chris-ade](https://github.com/Chris-ade) <br>
+> Twitter [@chris_adeh](https://twitter.com/chris_adeh)
