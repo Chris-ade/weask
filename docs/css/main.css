@@ -1114,6 +1114,12 @@ body.lights-off .button-primary:hover {
   -webkit-transform: perspective(1000px) rotateY(16deg) rotateX(2deg) rotateZ(-7deg) scaleY(0.95) translatex(2%);
   transform: perspective(1000px) rotateY(16deg) rotateX(2deg) rotateZ(-7deg) scaleY(0.95) translatex(2%);
 }
+.hero-media-image.screen-shot {
+  position: absolute;
+  width: 409px;
+  height: 309px;
+  z-index: 1;
+}
 .lights-off .hero-media-image {
   box-shadow: 48px 16px 48px rgba(0, 0, 0, 0.2);
 }
@@ -1195,13 +1201,18 @@ body.lights-off .button-primary:hover {
   left: 50%;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
-  max-width: 136%
+  max-width: 136%;
 }
 .features-box {
   margin: 0 auto;
   box-shadow: 48px 16px 48px rgba(24, 37, 56, 0.12);
   -webkit-transform: perspective(1000px) rotateY(10deg) translateY(2%);
   transform: perspective(1000px) rotateY(10deg) translateY(2%);
+}
+.features-box.screen-shot {
+  position: absolute;
+  object-fit: contain;
+  z-index: 1;
 }
 .lights-off .features-box {
   box-shadow: 48px 16px 48px rgba(0, 0, 0, 0.2);
@@ -1212,6 +1223,9 @@ body.lights-off .button-primary:hover {
 }
 .feature:last-of-type {
   margin-bottom: 0;
+}
+.feature:last-of-type .feature-content p {
+  text-align: left;
 }
 .feature-icon {
   display: inline-flex;
