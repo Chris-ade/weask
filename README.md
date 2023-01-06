@@ -31,18 +31,24 @@ $ git clone https://github.com/Chris-ade/weask
 # Go into the repository
 $ cd weask
 
+# Create a virtual environment, replace env_name with your desired name
+$ python3 -m venv env_name
+
+# Activate the virtual environment 
+$ source env_name/bin/activate
+
 # Install dependencies
-$ pip install -r requirements.txt
+(env_name) $ pip install -r requirements.txt
 
 # Run migrations
-$ python manage.py makemigrations
-$ python manage.py migrate
+(env_name) $ python3 manage.py makemigrations
+(env_name) $ python3 manage.py migrate
 
 # Run the server
-$ python manage.py runserver
+(env_name) $ python3 manage.py runserver
 ```
 > **Note**
-> If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `python` from the command prompt.
+> If you're using Windows OS use `python` or `py` instead of `python3` from the command prompt.
 
 ## Usage
 
