@@ -13,10 +13,10 @@
 
 ## Links
 
-* [Web site](https://weask.bytecodevision.tech/)
 * [About](https://landing.bytecodevision.tech/)
+* [Web site](https://weask.bytecodevision.tech/)
 * [Blog](https://weask.bytecodevision.tech/about/)
-* [Source code](https://github.com/Chris-ade/weask)
+* [Source code](https://github.com/chris-ade/weask)
 
 ## Installation
 
@@ -27,7 +27,7 @@ This app uses the default SQLite database.
 From your command line:
 ```bash
 # Clone this repository
-$ git clone https://github.com/Chris-ade/weask
+$ git clone https://github.com/chris-ade/weask
 
 # Go into the repository
 $ cd weask
@@ -66,5 +66,5 @@ MIT
 
 ---
 > LinkedIn [@Chris Adebiyi](https://www.linkedin.com/in/chris-adebiyi-266639189) <br>
-> GitHub [@Chris-ade](https://github.com/Chris-ade) <br>
+> GitHub [@Chris-ade](https://github.com/chris-ade) <br>
 > Twitter [@chris_adeh](https://twitter.com/chris_adeh)
