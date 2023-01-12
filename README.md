@@ -15,7 +15,7 @@
 
 * [About](https://landing.bytecodevision.tech/)
 * [Web site](https://weask.bytecodevision.tech/)
-* [Blog](https://weask.bytecodevision.tech/about/)
+* [Blog](https://www.linkedin.com/posts/chris-adebiyi-266639189_the-purpose-of-this-project-is-to-help-people-activity-7019002267752148992-6cp8)
 * [Source code](https://github.com/chris-ade/weask)
 
 ## Installation
