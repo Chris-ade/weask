@@ -24,9 +24,9 @@ function App() {
             element={<PrivateRoute component={Dashboard} />}
             exact
           />
-          <Route component={Login} path="/login" />
-          <Route component={Register} path="/register" exact />
-          <Route component={Landing} path="/" exact />
+          <Route element={<Login />} path="/login" />
+          <Route element={<Register />} path="/register" exact />
+          <Route element={<Landing />} path="/" exact />
         </Routes>
       </AuthProvider>
     </Router>
