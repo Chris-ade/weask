@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route
             path="/dashboard"
-            element={<PrivateRoute component={Dashboard} />}
+            element={<PrivateRoute element={<Dashboard />} />}
             exact
           />
           <Route element={<Login />} path="/login" />
