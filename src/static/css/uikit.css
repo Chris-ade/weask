@@ -4102,14 +4102,14 @@ ul.uk-nav-sub {
   list-style: none;
   position: relative;
 }
-.uk-tab::before {
+/* .uk-tab::before {
   content: "";
   position: absolute;
   bottom: 0;
   left: 20px;
   right: 0;
   border-bottom: 1px solid #dddddd;
-}
+} */
 /*
  * 1. Space is allocated solely based on content dimensions: 0 0 auto
  * 2. Gutter
@@ -4142,19 +4142,23 @@ ul.uk-nav-sub {
   text-decoration: none;
 }
 /* Active */
-.uk-tab > .uk-active > a {
+.uk-tab > li > a {
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
   width: 100%;
 }
-.uk-tab > .uk-active > a > span {
+.uk-tab > li > a > span {
+  opacity: 0;
   width: 8px;
   height: 8px;
   margin: 0 auto;
   background: #009B77;
   border-radius: 50px;
+}
+.uk-tab > li > a:hover > span, .uk-tab > li > a.active > span {
+	opacity: 1;
 }
 /*.uk-tab > .uk-active > a {
   color: #3e416d;

@@ -1,13 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useUser from "../../utils/useUser";
 
 const SideNav = () => {
+  const baseURL = "http://localhost:8000/";
+  const user = useUser();
+
   return (
     <>
       <section>
         <div className="is-sidebar is-hidden-mobile flex items-center p-10 space-x-6">
           <div className="flex flex-col items-center w-40 h-full overflow-hidden">
-            <Link className="flex items-center w-full px-3 mt-3 brand-icon">
+            <Link className="flex items-center w-full px-3 mt-3 brand-icon" to="/home">
               <svg viewBox="0 0 20 20">
                 <path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z" />
               </svg>
@@ -17,10 +21,7 @@ const SideNav = () => {
             </Link>
             <div className="w-full px-2 overflow-y no-scrollbar">
               <div className="is-item-wrapper">
-                <Link
-                  className="is-item is-active no-stroke"
-                  to="{% url 'core:home' %}"
-                >
+                <Link className="is-item is-active no-stroke" to="/home">
                   <svg
                     role="img"
                     className="icon w-6 h-6"
@@ -43,7 +44,7 @@ const SideNav = () => {
                   </svg>
                   <span className="ml-2 font-medium">Home</span>
                 </Link>
-                <Link className="is-item" to="{% url 'core:explore' %}">
+                <Link className="is-item" to="/explore">
                   <svg
                     className="icon w-6 h-6"
                     role="img"
@@ -53,8 +54,9 @@ const SideNav = () => {
                     <polygon points="14.121 14.121 7.05 16.95 9.879 9.879 16.95 7.05"></polygon>
                     <circle cx="12" cy="12" r="10"></circle>
                   </svg>
+                  <span className="ml-2 font-medium">Explore</span>
                 </Link>
-                <Link className="is-item" to="{% url 'core:search' %}">
+                <Link className="is-item" to="/search">
                   <svg
                     className="icon w-6 h-6"
                     role="img"
@@ -68,7 +70,7 @@ const SideNav = () => {
                   </svg>
                   <span className="ml-2 text-sm font-medium">Search</span>
                 </Link>
-                <Link className="is-item" to="{% url 'accounts:logout' %}">
+                <Link className="is-item" to="/logout">
                   <svg
                     role="img"
                     viewBox="0 0 24 24"
@@ -85,17 +87,15 @@ const SideNav = () => {
                 </Link>
               </div>
             </div>
-            <Link
-              className="is-item-profile"
-              to="{% url 'accounts:profile' username=request.user.username %}"
-            >
+            <Link className="is-item-profile" to={`/profile/${user.username}/`}>
               <img
-                src="{{request.user.avatar.url}}"
+                src={`${baseURL}/media/${user.avatar}`}
                 className="is-profile-pic"
+                alt={`${user.username} avatar`}
               />
               <div className="ml-2 text-sm font-medium is-user-name">
-                <h5 className="font-bold text-truncate">request.user.name</h5>
-                <span>@request.user.username</span>
+                <h5 className="font-bold text-truncate">{user.name}</h5>
+                <span>@{user.username}</span>
               </div>
             </Link>
           </div>
@@ -105,10 +105,7 @@ const SideNav = () => {
           <div className="is-mobile-nav-wrapper">
             <div className="is-item-container">
               <div className="is-item-wrapper">
-                <Link
-                  className="is-item is-active no-stroke"
-                  to="{% url 'core:home' %}"
-                >
+                <Link className="is-item is-active no-stroke" to="/home">
                   <svg
                     role="img"
                     className="icon w-6 h-6"
@@ -121,7 +118,7 @@ const SideNav = () => {
                     <rect width="6" height="8" x="9" y="14"></rect>
                   </svg>
                 </Link>
-                <Link className="is-item" to="{% url 'core:explore' %}">
+                <Link className="is-item" to="/explore">
                   <svg
                     className="icon w-6 h-6"
                     role="img"
@@ -132,10 +129,7 @@ const SideNav = () => {
                     <circle cx="12" cy="12" r="10"></circle>
                   </svg>
                 </Link>
-                <Link
-                  className="is-item is-item-create"
-                  to="{% url 'core:create' %}"
-                >
+                <Link className="is-item is-item-create" to="/create">
                   <div>
                     <span>
                       <svg
@@ -156,7 +150,7 @@ const SideNav = () => {
                   </div>
                 </Link>
                 <Link className="is-item overlay"></Link>
-                <Link className="is-item" to="{% url 'core:search' %}">
+                <Link className="is-item" to="/search">
                   <svg
                     className="icon w-6 h-6"
                     role="img"
@@ -169,9 +163,12 @@ const SideNav = () => {
                 </Link>
                 <Link
                   className="is-item is-item-profile"
-                  to="{% url 'accounts:profile' username=request.user.username %}"
+                  to={`/profile/${user.username}`}
                 >
-                  <img src="{{request.user.avatar.url}}" />
+                  <img
+                    src={`${baseURL}/media/${user.avatar}`}
+                    alt={`${user.username} avatar`}
+                  />
                 </Link>
               </div>
             </div>

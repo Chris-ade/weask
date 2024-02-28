@@ -1,15 +1,23 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import LoadingBar from "../utils/LoadingBar";
+import useTitle from "../utils/useTitle";
 
 function Register() {
+  useTitle("Register an account | WeAsk");
+
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const { registerUser } = useContext(AuthContext);
 
+  console.log(fullName);
+  console.log(username);
   console.log(email);
   console.log(username);
   console.log(password);
@@ -17,11 +25,16 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    registerUser(email, username, password, password2);
+    if (password === password2) {
+      registerUser(email, username, password, password2);
+    } else {
+      setErrorMessage("The passwords does not match.");
+    }
   };
 
   return (
     <>
+      <LoadingBar />
       <div className="login-wrapper">
         <div className="login-container row display-flex">
           <div className="login-sidebar col col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -44,45 +57,61 @@ function Register() {
                 <div className="form-title text-center">Create an account.</div>
 
                 <div className="login-form">
-                  <form
-                    action="{% url 'accounts:register' %}"
-                    method="POST"
-                    autocomplete="off"
-                  >
-                    {/* for message in messages */}
-                    <div className="notification-box notification-box-extra notification-box-error">
-                      <p>message</p>
-                      <div className="notification-close notification-close-error"></div>
-                    </div>
-                    {/* endfor */}
+                  <form autoComplete="off" onSubmit={handleSubmit}>
+                    {errorMessage && (
+                      <div className="notification-box notification-box-extra notification-box-error">
+                        <p>{errorMessage}</p>
+                        <div className="notification-close notification-close-error"></div>
+                      </div>
+                    )}
 
                     <div className="form-group label-floating is-empty">
                       <label className="control-label">Full Name</label>
-                      <input type="text" className="form-control" />
+                      <input
+                        type="text"
+                        className="form-control"
+                        onChange={(e) => setFullName(e.target.value)}
+                      />
                       <span className="material-input"></span>
                     </div>
 
                     <div className="form-group label-floating is-empty">
                       <label className="control-label">Username</label>
-                      <input type="text" className="form-control" />
+                      <input
+                        type="text"
+                        className="form-control"
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
                       <span className="material-input"></span>
                     </div>
 
                     <div className="form-group label-floating is-empty">
                       <label className="control-label">E-mail</label>
-                      <input type="email" className="form-control" />
+                      <input
+                        type="email"
+                        className="form-control"
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
                       <span className="material-input"></span>
                     </div>
 
                     <div className="form-group label-floating is-empty">
                       <label className="control-label">Password</label>
-                      <input type="password" className="form-control" />
+                      <input
+                        type="password"
+                        className="form-control"
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
                       <span className="material-input"></span>
                     </div>
 
                     <div className="form-group label-floating is-empty">
                       <label className="control-label">Confirm password</label>
-                      <input type="password" className="form-control" />
+                      <input
+                        type="password"
+                        className="form-control"
+                        onChange={(e) => setPassword2(e.target.value)}
+                      />
                       <span className="material-input"></span>
                     </div>
 
@@ -90,10 +119,7 @@ function Register() {
                       Register
                     </button>
                   </form>
-                  <Link
-                    className="login-button-outline"
-                    to="{% url 'accounts:welcome' %}"
-                  >
+                  <Link className="login-button-outline" to="/login">
                     Back to login
                   </Link>
                 </div>
@@ -107,8 +133,8 @@ function Register() {
         <div className="container">
           <p className="lead">A portfolio project</p>
           <p>
-            Powered and coded by{" "}
-            <span className="font-bold">Chris Adebiyi</span>. <br /> Made in 🇳🇬{" "}
+            Powered and coded by
+            <span className="font-bold">Chris Adebiyi</span>. <br /> Made in 🇳🇬
           </p>
 
           <ul className="footer-links text-center py-4">
@@ -147,7 +173,7 @@ function Register() {
                 <svg viewBox="0 0 32 32" role="img">
                   <path
                     d=" M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.746.315-.688.645-1.032 1.318-1.06 2.264v.114c-.015.99.472 1.977 1.017 2.78 1.23 1.82 2.506 3.41 4.554 4.34.616.287 2.035.888 2.722.888.817 0 2.15-.515 2.478-1.318.13-.33.244-.73.244-1.088 0-.058 0-.144-.03-.215-.1-.172-2.434-1.39-2.678-1.39zm-2.908 7.593c-1.747 0-3.48-.53-4.942-1.49L7.793 24.41l1.132-3.337a8.955 8.955 0 0 1-1.72-5.272c0-4.955 4.04-8.995 8.997-8.995S25.2 10.845 25.2 15.8c0 4.958-4.04 8.998-8.998 8.998zm0-19.798c-5.96 0-10.8 4.842-10.8 10.8 0 1.964.53 3.898 1.546 5.574L5 27.176l5.974-1.92a10.807 10.807 0 0 0 16.03-9.455c0-5.958-4.842-10.8-10.802-10.8z"
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                   ></path>
                 </svg>
               </Link>

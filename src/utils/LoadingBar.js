@@ -5,12 +5,11 @@ export default function LoadingBar() {
 
   useEffect(() => {
     const startLoadingBar = () => {
-      const newWidth = 50 + Math.random() * 30;
-      setLoadingBarWidth(`${newWidth}%`);
+      setLoadingBarWidth('100%');
     };
 
     const stopLoadingBar = () => {
-      setLoadingBarWidth("0%");
+      setLoadingBarWidth('0%');
     };
 
     startLoadingBar();
