@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useAxios from "../../../utils/useAxios";
+import CustomDate from "../../../utils/CustomDate";
 import { Link } from "react-router-dom";
 
 const Likes = ({ userProfile, user }) => {
@@ -64,18 +65,19 @@ const Likes = ({ userProfile, user }) => {
                             #{q.asked_by.username}
                           </span>
                         </span>
-                        <span>{q.created_at}</span>
+                        <CustomDate value={q.created_at} />
                       </div>
                       <div className="question-action-button">
-                        <Link
-                          className="like-button"
-                          hx-get={`/like/${q.id}`}
-                          hx-target={`#question/${q.id}`}
-                          hx-swap="outerHTML"
-                        >
+                        <Link className="like-button">
                           <svg
                             role="img"
-                            className="icon {% if request.user in q.likes.all %}liked{% endif %}"
+                            className={
+                              q.likes.find(
+                                (likedUser) => likedUser === user.user_id
+                              )
+                                ? "icon liked"
+                                : "icon"
+                            }
                             viewBox="0 0 24 24"
                           >
                             <path d="M12,21 L10.55,19.7051771 C5.4,15.1242507 2,12.1029973 2,8.39509537 C2,5.37384196 4.42,3 7.5,3 C9.24,3 10.91,3.79455041 12,5.05013624 C13.09,3.79455041 14.76,3 16.5,3 C19.58,3 22,5.37384196 22,8.39509537 C22,12.1029973 18.6,15.1242507 13.45,19.7149864 L12,21 Z"></path>
@@ -85,18 +87,7 @@ const Likes = ({ userProfile, user }) => {
                     </div>
 
                     <div className="question-text">
-                      {q.content.length >= 25 ? (
-                        <p>
-                          {q.content}
-                          <span className="dots">...</span>
-                          <span className="full">
-                            {q.content.slice(25, q.content.length)}
-                          </span>{" "}
-                          <span className="see-more">See more</span>
-                        </p>
-                      ) : (
-                        <p> {q.content} </p>
-                      )}
+                      <p> {q.content} </p>
                     </div>
                     <div className="question-footer">
                       <div className="likes">

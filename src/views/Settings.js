@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Wrapper from "../views/Wrapper";
 import useTitle from "../utils/useTitle";
 import useAxios from "../utils/useAxios";
-import useUser from "../utils/useUser";
+import AuthContext from "../context/AuthContext";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -15,7 +15,7 @@ const baseURL = "http://localhost:8000/";
 
 function Settings() {
   useTitle("Profile Settings | WeAsk");
-  const user = useUser();
+  const { user } = useContext(AuthContext);
   const [userProfile, setUserProfile] = useState("");
   const api = useAxios();
   const [errorMessage, setErrorMessage] = useState("");

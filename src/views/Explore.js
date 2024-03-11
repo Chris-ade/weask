@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Wrapper from "../views/Wrapper";
 import useTitle from "../utils/useTitle";
 import useAxios from "../utils/useAxios";
-import useUser from "../utils/useUser";
+import AuthContext from "../context/AuthContext";
 
 import "../static/css/UIkit.css";
 import NoPage from "./NoPage";
@@ -12,7 +12,7 @@ const baseURL = "http://localhost:8000/";
 
 function Explore() {
   useTitle("Explore Categories | WeAsk");
-  const user = useUser();
+  const { user } = useContext(AuthContext);
   const api = useAxios();
   const [categories, setCategories] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -54,16 +54,16 @@ function Explore() {
           {categories ? (
             <div className="questions-wrap is-smaller">
               <div className="container-fluid">
-                <div className="question-content is-large">
+                <div className="question-content">
                   <div className="row">
                     <div className="column">
                       <div className="tile is-ancestor categories-tile-grid">
                         <div className="tile is-vertical is-8">
                           <div className="tile">
                             <div className="tile is-parent is-vertical">
-                              <a
+                              <Link
                                 className="tile is-child category-box"
-                                href="/view/category/sci-and-tech"
+                                to="/category/sci-and-tech"
                               >
                                 <img
                                   src={baseURL + "static/icons/lightbulb.svg"}
@@ -80,10 +80,10 @@ function Explore() {
                                     stuff.{" "}
                                   </p>
                                 </div>
-                              </a>
-                              <a
+                              </Link>
+                              <Link
                                 className="tile is-child category-box"
-                                href="/view/category/books"
+                                to="/category/books"
                               >
                                 <img
                                   src={baseURL + "static/icons/book.svg"}
@@ -99,13 +99,13 @@ function Explore() {
                                     books, literature and other related stuff.{" "}
                                   </p>
                                 </div>
-                              </a>
+                              </Link>
                             </div>
 
                             <div className="tile is-parent is-vertical">
-                              <a
+                              <Link
                                 className="tile is-child category-box"
-                                href="/view/category/movies"
+                                to="/category/movies"
                               >
                                 <img
                                   src={baseURL + "static/icons/tv.svg"}
@@ -121,10 +121,10 @@ function Explore() {
                                     movies, tv series and other related stuff.{" "}
                                   </p>
                                 </div>
-                              </a>
-                              <a
+                              </Link>
+                              <Link
                                 className="tile is-child category-box"
-                                href="/view/category/general"
+                                to="/category/general"
                               >
                                 <img
                                   src={baseURL + "static/icons/chat-alt.svg"}
@@ -138,13 +138,13 @@ function Explore() {
                                     anything in general.{" "}
                                   </p>
                                 </div>
-                              </a>
+                              </Link>
                             </div>
                           </div>
                           <div className="tile is-parent">
-                            <a
+                            <Link
                               className="tile is-child category-box"
-                              href="/view/category/sports-and-fitness"
+                              to="/category/sports-and-fitness"
                             >
                               <img
                                 src={baseURL + "static/icons/basketball.svg"}
@@ -159,13 +159,13 @@ function Explore() {
                                   stuff.{" "}
                                 </p>
                               </div>
-                            </a>
+                            </Link>
                           </div>
                         </div>
                         <div className="tile is-parent is-vertical">
-                          <a
+                          <Link
                             className="tile is-child category-box is-taller"
-                            href="/view/category/travels"
+                            to="/category/travels"
                           >
                             <img
                               src={baseURL + "static/icons/plane.svg"}
@@ -179,10 +179,10 @@ function Explore() {
                                 traveling and other related stuff.{" "}
                               </p>
                             </div>
-                          </a>
-                          <a
+                          </Link>
+                          <Link
                             className="tile is-child category-box is-taller"
-                            href="/view/category/business"
+                            to="/category/business"
                           >
                             <img
                               src={baseURL + "static/icons/suitcase.svg"}
@@ -197,15 +197,15 @@ function Explore() {
                                 stuff.{" "}
                               </p>
                             </div>
-                          </a>
+                          </Link>
                         </div>
                       </div>
 
                       <div className="tile is-ancestor">
                         <div className="tile is-parent is-vertical">
-                          <a
+                          <Link
                             className="tile is-child category-box is-taller"
-                            href="/view/category/programming"
+                            to="/category/programming"
                           >
                             <img
                               src={baseURL + "static/icons/code-alt.svg"}
@@ -219,10 +219,10 @@ function Explore() {
                                 programming, coding and other related stuff.{" "}
                               </p>
                             </div>
-                          </a>
-                          <a
+                          </Link>
+                          <Link
                             className="tile is-child category-box is-taller"
-                            href="/view/category/automotives"
+                            to="/category/automotives"
                           >
                             <img
                               src={baseURL + "static/icons/bike.svg"}
@@ -236,14 +236,14 @@ function Explore() {
                                 automotives and other related stuff.{" "}
                               </p>
                             </div>
-                          </a>
+                          </Link>
                         </div>
                         <div className="tile is-vertical is-8">
                           <div className="tile">
                             <div className="tile is-parent is-vertical">
-                              <a
+                              <Link
                                 className="tile is-child category-box"
-                                href="/view/category/relationships"
+                                to="/category/relationships"
                               >
                                 <img
                                   src={baseURL + "static/icons/favourite.svg"}
@@ -258,10 +258,10 @@ function Explore() {
                                     stuff.{" "}
                                   </p>
                                 </div>
-                              </a>
-                              <a
+                              </Link>
+                              <Link
                                 className="tile is-child category-box"
-                                href="/view/category/graphics"
+                                to="/category/graphics"
                               >
                                 <img
                                   src={baseURL + "static/icons/aperture.svg"}
@@ -278,12 +278,12 @@ function Explore() {
                                     stuff{" "}
                                   </p>
                                 </div>
-                              </a>
+                              </Link>
                             </div>
                             <div className="tile is-parent is-vertical">
-                              <a
+                              <Link
                                 className="tile is-child category-box"
-                                href="/view/category/health"
+                                to="/category/health"
                               >
                                 <img
                                   src={baseURL + "static/icons/activity.svg"}
@@ -298,10 +298,10 @@ function Explore() {
                                     related stuff
                                   </p>
                                 </div>
-                              </a>
-                              <a
+                              </Link>
+                              <Link
                                 className="tile is-child category-box"
-                                href="/view/category/entertainment'"
+                                to="/category/entertainment'"
                               >
                                 <img
                                   src={baseURL + "static/icons/music.svg"}
@@ -315,13 +315,13 @@ function Explore() {
                                     musics, entertainment related stuff{" "}
                                   </p>
                                 </div>
-                              </a>
+                              </Link>
                             </div>
                           </div>
                           <div className="tile is-parent">
-                            <a
+                            <Link
                               className="tile is-child category-box"
-                              href="/view/category/astronomy"
+                              to="/category/astronomy"
                             >
                               <img
                                 src={baseURL + "static/icons/rocket.svg"}
@@ -336,7 +336,7 @@ function Explore() {
                                   astrology, space and other related stuff.{" "}
                                 </p>
                               </div>
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>

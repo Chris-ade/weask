@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import useUser from "../../utils/useUser";
+import AuthContext from "../../context/AuthContext";
 
 const SideNav = () => {
   const baseURL = "http://localhost:8000/";
-  const user = useUser();
+  const { user } = useContext(AuthContext);
 
   return (
     <>
@@ -87,7 +87,7 @@ const SideNav = () => {
                 </Link>
               </div>
             </div>
-            <Link className="is-item-profile" to={`/profile/${user.username}/`}>
+            <Link className="is-item-profile" to={`/profile/${user.username}/`} title={`${user.name} - @${user.username}`}>
               <img
                 src={`${baseURL}/media/${user.avatar}`}
                 className="is-profile-pic"
@@ -129,7 +129,7 @@ const SideNav = () => {
                     <circle cx="12" cy="12" r="10"></circle>
                   </svg>
                 </Link>
-                <Link className="is-item is-item-create" to="/create">
+                <Link className="is-item is-item-create" to="/ask">
                   <div>
                     <span>
                       <svg

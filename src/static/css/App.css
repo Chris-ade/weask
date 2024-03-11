@@ -1523,7 +1523,7 @@ select.form-control {
   width: 100%;
   height: 4rem;
   justify-content: center;
-  margin-top: auto !important;
+  margin: auto 8px 0 8px;
 }
 
 .is-sidebar .is-item-profile:hover {
@@ -1545,7 +1545,9 @@ select.form-control {
 }
 
 .is-sidebar .is-item-profile .is-user-name {
-  max-width: 100px;
+  max-width: 80px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .footer-sidebar {
@@ -2352,7 +2354,6 @@ pre {
 
 .ui-compose-container {
   padding: 15px 25px;
-  border-radius: 0;
 }
 
 .ui-compose-container .ui-compose-title {
@@ -2517,13 +2518,18 @@ pre {
   height: 100%;
   left: 0;
   top: 0;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.ui-create-button a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .ui-create-button svg {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   stroke: #fff;
   animation: blink 3s ease infinite;
   transition: all 0.3s ease;
@@ -2624,16 +2630,16 @@ pre {
 
 .fab {
   position: absolute;
-  bottom: -1rem;
+  bottom: 0;
   right: -1rem;
   width: 48px;
   height: 48px;
-  border-radius: 50%;
   background: #009B77;
   transition: all 0.3s ease;
   z-index: 1;
-  border-bottom-right-radius: 6px;
+  border-radius: 8px;
   border: 1px solid #009B77;
+  cursor: pointer;
 }
 
 .fab:before {
@@ -2643,8 +2649,6 @@ pre {
   height: 100%;
   left: 0;
   top: 0;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .fab.is-active~.fab:before {
@@ -2718,22 +2722,34 @@ pre {
 
 .fab-wheel {
   position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 9rem;
-  height: 9rem;
+  bottom: 60px;
+  right: -16px;
   transition: all 0.3s ease;
-  transform-origin: bottom right;
   transform: scale(0);
+  transform-origin: bottom right;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.fab.is-active~.fab-wheel {
+.fab.is-active~.fab-wheel-wrapper .fab-wheel {
   transform: scale(1);
 }
 
+.fab-action.ask-question {
+  width: 50px;
+  height: 50px;
+}
+
+.fab-action.ask-question svg {
+  width: 26px;
+  height: 26px;
+}
+
 .fab-action {
-  position: absolute;
-  background: #fafafa;
+  margin: 6px 0;
   width: 38px;
   height: 38px;
   border-radius: 50%;
@@ -2742,16 +2758,18 @@ pre {
   justify-content: center;
   transition: all 1s ease;
   opacity: 0;
+  box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, .09);
+  background: #009B77;
 }
 
 .fab-action svg {
   width: 17px;
   height: 17px;
-  stroke: #2E2E2E;
+  stroke: #fff;
   stroke-width: 2.5px;
 }
 
-.fab.is-active~.fab-wheel .fab-action {
+.fab.is-active~.fab-wheel-wrapper .fab-wheel .fab-action {
   opacity: 1;
 }
 
@@ -2761,16 +2779,6 @@ pre {
 
 .fab-action:hover svg {
   stroke: #fafafa;
-}
-
-.fab-wheel .fab-action:first-of-type {
-  right: -0.5rem;
-  top: 0;
-}
-
-.fab-wheel .fab-action:last-of-type {
-  right: -0.5rem;
-  bottom: 3.25rem;
 }
 
 .big-text {

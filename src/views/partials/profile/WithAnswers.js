@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useAxios from "../../../utils/useAxios";
 import { Link } from "react-router-dom";
+import CustomDate from "../../../utils/CustomDate";
 
 const WithAnswers = ({ userProfile, user }) => {
   const [data, setData] = useState();
@@ -62,23 +63,12 @@ const WithAnswers = ({ userProfile, user }) => {
                           {q.by.name}{" "}
                           <span className="username">#{q.by.username}</span>
                         </span>
-                        <span>{q.created_at}</span>
+                        <CustomDate value={q.created_at} />
                       </div>
                     </div>
 
                     <div className="question-text">
-                      {q.content.length >= 25 ? (
-                        <p>
-                          {q.content}
-                          <span className="dots">...</span>
-                          <span className="full">
-                            {/* slice_text q.content start=25 end=q.content|length */}
-                          </span>{" "}
-                          <span className="see-more">See more</span>
-                        </p>
-                      ) : (
-                        <p> {q.content} </p>
-                      )}
+                      <p> {q.content} </p>
                     </div>
                     <div className="question-footer">
                       <div className="likes">

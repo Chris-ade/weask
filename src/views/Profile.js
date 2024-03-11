@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Wrapper from "../views/Wrapper";
 import useTitle from "../utils/useTitle";
 import useAxios from "../utils/useAxios";
-import useUser from "../utils/useUser";
+import AuthContext from "../context/AuthContext";
 
 import "../static/css/UIkit.css";
 import NoPage from "./NoPage";
 import Questions from "./partials/profile/Questions";
 import WithAnswers from "./partials/profile/WithAnswers";
 import Likes from "./partials/profile/Likes";
+import CustomDate from "../utils/CustomDate";
 
 const baseURL = "http://localhost:8000/";
 
 function Profile() {
   useTitle("Profile | WeAsk");
-  const user = useUser();
+  const { user } = useContext(AuthContext);
   const { username } = useParams();
   const [userProfile, setUserProfile] = useState("");
   const api = useAxios();
@@ -184,7 +185,7 @@ function Profile() {
                           <path d="M7 5V3"></path>
                           <path d="M17 5V3"></path>
                         </svg>{" "}
-                        Joined {userProfile.date_joined}
+                        Joined <CustomDate value={userProfile.date_joined} /> ago
                       </span>
                     </div>
                   </div>

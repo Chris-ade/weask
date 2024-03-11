@@ -1,52 +1,81 @@
-(function ($) {
-  $.fn.characterCounter = function (options) {
-    var settings = $.extend(
-      {
-        max: 100,
-        opacity: ".8",
-        color: "#363642",
-        textArea: false,
-      },
-      options
-    );
+import React, { useEffect, useState } from "react";
 
-    return this.each(function () {
-      $(this).wrap('<div class="character-wrap"></div>');
-      $(this).after('<span class="remaining"></span>');
+const Counter = ({
+  max = 100,
+  opacity = 0.8,
+  color = "#363642",
+  input = true,
+  className,
+  inputType = "text",
+  onChange,
+  onClick,
+  textArea = false,
+}) => {
+  const [remaining, setRemaining] = useState(max);
 
-      // This will write the input's value on database
-      var value = $(this).val().length;
-      var result = settings.max - value;
-      $(this).next(".remaining").text(result);
+  useEffect(() => {
+    const inputEl = document.getElementById("character-counter-input");
+    inputEl.addEventListener("input", updateRemaining);
 
-      // This is counter
-      $(this).keyup(function () {
-        var value = $(this).val().length;
-        var result = settings.max - value;
-        $(this).next(".remaining").text(result);
-      });
+    return () => {
+      inputEl.removeEventListener("input", updateRemaining);
+    };
+  }, []);
 
-      // Css
-      // $(this).css("padding-right", "35px");
-      $(this).parent(".character-wrap").css("position", "relative");
-      $(this).next(".remaining").css({
-        position: "absolute",
-        opacity: settings.opacity,
-        color: settings.color,
-        right: "10px",
-      });
-
-      // textArea
-      if (settings.textArea == false) {
-        $(this).next(".remaining").css({
-          top: "50%",
-          transform: "translateY(-50%)",
-        });
-      } else {
-        $(this).next(".remaining").css({
-          bottom: "10px",
-        });
-      }
+  const updateRemaining = () => {
+    const inputEl = document.querySelectorAll(".character-counter-input");
+    inputEl.forEach((element) => {
+      const valueLength = element.value.length;
+      const remainingChars = max - valueLength;
+      setRemaining(remainingChars);
     });
   };
-})(jQuery);
+
+  const handleChange = (event) => {
+    if (onChange) {
+      onChange(event);
+    }
+    updateRemaining();
+  };
+
+  const positionStyle = textArea
+    ? { bottom: "10px" }
+    : { top: "50%", transform: "translateY(-50%)" };
+
+  return (
+    <div className="character-wrap" style={{ position: "relative" }}>
+      {!textArea ? (
+        <input
+          id="character-counter-input"
+          className={`${className} character-counter-input`}
+          type="text"
+          onChange={handleChange}
+          style={{ paddingRight: "35px" }}
+          required
+        />
+      ) : (
+        <textarea
+          id="character-counter-input"
+          className={`${className} character-counter-input`}
+          onChange={handleChange}
+          style={{ paddingRight: "35px" }}
+          required
+        ></textarea>
+      )}
+      <span
+        className="remaining"
+        style={{
+          position: "absolute",
+          opacity,
+          color,
+          right: "10px",
+          ...positionStyle,
+        }}
+      >
+        {remaining}
+      </span>
+    </div>
+  );
+};
+
+export default Counter;

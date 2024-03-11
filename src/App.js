@@ -9,32 +9,39 @@ import "./static/css/App2.css";
 import "./static/css/Bootstrap.css";
 import "./static/css/Tailwind.css";
 
-import Landing from "./views/Landing";
 import Register from "./views/Register";
 import Login from "./views/Login";
-import Dashboard from "./views/Dashboard";
 import NoPage from "./views/NoPage";
 import Explore from "./views/Explore";
+import ViewQuestions from "./views/ViewQuestions";
 import Profile from "./views/Profile";
 import Settings from "./views/Settings";
+import Question from "./views/Question";
+import Search from "./views/Search";
+import Home from "./views/Home";
+import AskQuestion from "./views/AskQuestion";
+import Logout from "./views/Logout";
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <Routes>
-          <Route
-            path="/dashboard"
-            element={<PrivateRoute element={<Dashboard />} />}
-            exact
-          />
-          <Route path="/" element={<Landing />} exact />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} exact />
-          <Route path="/explore" element={<Explore />} exact />
-          <Route path="/profile/:username" element={<Profile />} exact />
-          <Route path="/settings" element={<Settings />} exact />
-          <Route path="*" element={<NoPage />} exact />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/register" element={<Register />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/category/:slug" element={<ViewQuestions />} />
+            <Route path="/ask" element={<AskQuestion />} />
+            <Route path="/question/:slug/:id" element={<Question />} />
+            <Route path="/profile/:username" element={<Profile />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/settings" element={<Settings />} />
+          </Route>
+          <Route path="*" element={<NoPage />} />
         </Routes>
       </AuthProvider>
     </Router>

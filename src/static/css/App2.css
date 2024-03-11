@@ -347,6 +347,7 @@
   padding: 4px;
   background: #fafafa;
   width: 90%;
+  font-size: initial !important;
 }
 .question-content .new-answer-block .uk-button {
   border: 0;
