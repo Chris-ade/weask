@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import Wrapper from "../views/Wrapper";
 import useTitle from "../utils/useTitle";
 import useAxios from "../utils/useAxios";
+import Toast from "../utils/useToast";
 import AuthContext from "../context/AuthContext";
 
 import "../static/css/UIkit.css";
@@ -14,13 +15,16 @@ function Question() {
   const [pageTitle, setPageTitle] = useState("Question");
   useTitle(`${pageTitle} | WeAsk`);
 
+  const api = useAxios();
+
   const { user } = useContext(AuthContext);
   const [questions, setQuestions] = useState("");
   const [answers, setAnswers] = useState("");
+  const [comment, setComment] = useState("");
   const [categoryName, setCategoryName] = useState("");
   const [categorySlug, setCategorySlug] = useState("");
   const { slug, id } = useParams();
-  const api = useAxios();
+
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [contentLoading, setContentLoading] = useState(true);
@@ -43,6 +47,72 @@ function Question() {
     } catch (error) {
       setQuestions(null);
       setContentLoading(false);
+    }
+  };
+
+  const handleLike = async (qid) => {
+    try {
+      const response = await api.post(
+        `question/like/`,
+        {
+          target: qid,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.data.success) {
+        fetchData();
+      }
+    } catch (error) {
+      <Toast type="error" />;
+    }
+  };
+
+  const handleAnswerLike = async (answer_id) => {
+    try {
+      const response = await api.post(
+        `answers/like/`,
+        {
+          target: answer_id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.data.success) {
+        fetchData();
+      }
+    } catch (error) {
+      <Toast type="error" />;
+    }
+  };
+
+  const handleComment = async (e, qid) => {
+    e.preventDefault();
+
+    try {
+      const response = await api.post(
+        `answers/post/`,
+        {
+          target: qid,
+          content: comment,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.data.success) {
+        fetchData();
+      }
+    } catch (error) {
+      <Toast type="error" />;
     }
   };
 
@@ -128,12 +198,11 @@ function Question() {
                                   <CustomDate value={q.created_at} />
                                 </div>
                                 <div className="question-action-button">
-                                  <Link
-                                    className="like-button"
-                                    hx-get="{% url 'core:like' target=q.id %}"
-                                  >
+                                  <Link className="like-button">
                                     <svg
                                       role="img"
+                                      onClick={() => handleLike(q.id)}
+                                      key={q.id}
                                       className={
                                         q.liked_by.find(
                                           (likedUser) =>
@@ -184,11 +253,14 @@ function Question() {
                           </div>
 
                           <div className="new-answer-block">
-                            <form className="w-full">
-                              <input type="hidden" value={q.id} />
+                            <form
+                              onSubmit={(e) => handleComment(e, q.id)}
+                              className="w-full"
+                            >
                               <input
                                 type="text"
                                 placeholder="Write an answer..."
+                                onChange={(e) => setComment(e.target.value)}
                               />
                               <button
                                 type="submit"
@@ -242,7 +314,7 @@ function Question() {
                                       <div className="action-buttons">
                                         <Link
                                           className="upvote-button"
-                                          hx-get="{% url 'core:like-answer' target=ans.id %}"
+                                          onClick={() => handleAnswerLike(ans.id)}
                                         >
                                           <svg
                                             role="img"
@@ -319,7 +391,7 @@ function Question() {
                                           <span>{ans.likes_count}</span>
                                         </div>
                                         <div className="time">
-                                        <CustomDate value={ans.created_at} />
+                                          <CustomDate value={ans.created_at} />
                                         </div>
                                       </div>
                                     </div>

@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Wrapper from "./Wrapper";
 import useTitle from "../utils/useTitle";
 import useAxios from "../utils/useAxios";
 import Counter from "../utils/Counter";
+import Toast from "../utils/useToast";
 
 function AskQuestion() {
   useTitle("Ask a question | WeAsk");
 
   const api = useAxios();
+  const form = useRef();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [category, setCategory] = useState("programming");
   const [categories, setCategories] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -23,21 +26,25 @@ function AskQuestion() {
         setCategories(null);
       }
     } catch (error) {
-      // Handle error
+      <Toast type="error" />;
+      setCategories(null);
     }
     setLoading(false);
   };
 
-  const handleCategory = (e) => {};
+  const handleCategory = (e) => {
+    setCategory(e.target.value);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await api.post(
-        `post/`,
+        `question/post/`,
         {
-          query: query,
-          filter: selectedFilter,
+          title: title,
+          content: content,
+          category: category,
         },
         {
           headers: {
@@ -46,27 +53,16 @@ function AskQuestion() {
         }
       );
       if (response.data.success) {
-        if (response.data.context === "questions") {
-          setCount(response.data.result_count);
-          setResult(response.data.questions);
-          setNoResult(false);
-        } else if (
-          response.data.success &&
-          response.data.context === "categories"
-        ) {
-          setCount(response.data.result_count);
-          setResult(response.data.categories);
-          setNoResult(false);
-        } else {
-          setCount(response.data.result_count);
-          setResult(response.data.users);
-          setNoResult(false);
-        }
+        setTitle("");
+        setContent("");
+        form.current.reset();
+        setCategory("programming");
+        <Toast message={response.data.message} />;
       } else {
-        setNoResult(true);
+        <Toast type="error" message={response.data.message} />;
       }
     } catch (error) {
-      // Handle error
+      <Toast type="error" />;
     }
   };
 
@@ -95,8 +91,8 @@ function AskQuestion() {
                     Which will be visible under the category you chose.
                   </span>
                 </div>
-                <form onSubmit={handleSubmit}>
-                  <div className="form-group label-floating is-empty">
+                <form ref={form} onSubmit={handleSubmit}>
+                  <div className="form-group label-floating">
                     <label className="control-label">Title</label>
                     <Counter
                       type="text"
@@ -107,7 +103,7 @@ function AskQuestion() {
                     <p className="material-input"></p>
                   </div>
 
-                  <div className="form-group label-floating is-empty">
+                  <div className="form-group label-floating">
                     <label className="control-label">
                       What do you want to ask in full?
                     </label>
