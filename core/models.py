@@ -19,6 +19,7 @@ class Category(models.Model):
       'name': self.name,
       'slug': self.slug,
       'description': self.description,
+      'questions_count': self.question_set.count()
     }
 
 class Question(models.Model):
@@ -36,9 +37,13 @@ class Question(models.Model):
     return {
       'id': self.id,
       'category': self.category.name,
+      'category_slug': self.category.slug,
       'asked_by': self.asked_by.username,
+      'asked_by_name': self.asked_by.name,
+      'asked_by_avatar': self.asked_by.avatar.url,
       'title': self.title,
       'content': self.content,
+      'answers_count': self.answer_set.count(),
       'likes_count': self.likes.count(),
       'liked_by': list(self.likes.values('id', 'username')),
       'created_at': self.created_at.isoformat(),
@@ -61,9 +66,13 @@ class Answer(models.Model):
   def json(self):
     return {
       'id': self.id,
-      'question': self.question.name,
+      'question': self.question.title,
       'by': self.by.username,
+      'by_name': self.by.name,
+      'by_username': self.by.username,
+      'by_avatar': self.by.avatar.url,
       'content': self.content,
+      'accepted': self.accepted,
       'likes_count': self.likes.count(),
       'liked_by': list(self.likes.values('id', 'username')),
       'created_at': self.created_at.isoformat(),
