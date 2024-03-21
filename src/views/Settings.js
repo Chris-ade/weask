@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import "../static/css/UIkit.css";
 import NoPage from "./NoPage";
 
-const baseURL = "http://localhost:8000/";
+const baseURL = "https://hackinubee.pythonanywhere.com/";
 
 function Settings() {
   useTitle("Profile Settings | WeAsk");

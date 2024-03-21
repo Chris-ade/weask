@@ -12,7 +12,7 @@ import WithAnswers from "./partials/profile/WithAnswers";
 import Likes from "./partials/profile/Likes";
 import CustomDate from "../utils/CustomDate";
 
-const baseURL = "http://localhost:8000/";
+const baseURL = "https://hackinubee.pythonanywhere.com/";
 
 function Profile() {
   useTitle("Profile | WeAsk");

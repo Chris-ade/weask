@@ -8,7 +8,7 @@ import AuthContext from "../context/AuthContext";
 import "../static/css/UIkit.css";
 import CustomDate from "../utils/CustomDate";
 
-const baseURL = "http://localhost:8000/";
+const baseURL = "https://hackinubee.pythonanywhere.com/";
 
 function ViewQuestions() {
   const { slug } = useParams();
