@@ -7,7 +7,7 @@ const Questions = ({ userProfile, user }) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
   const api = useAxios();
-  const baseURL = "http://localhost:8000/";
+  const baseURL = "https://hackinubee.pythonanywhere.com/";
 
   useEffect(() => {
     const fetchData = async () => {

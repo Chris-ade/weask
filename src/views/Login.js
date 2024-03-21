@@ -68,6 +68,7 @@ function Login() {
                         type="text"
                         className="form-control"
                         onChange={(e) => setUsername(e.target.value)}
+                        required
                       />
                       <span className="material-input"></span>
                     </div>
@@ -80,6 +81,7 @@ function Login() {
                         id="password"
                         onChange={(e) => setPassword(e.target.value)}
                         ref={passwordField}
+                        required
                       />
                       <div
                         id="toggle-password"

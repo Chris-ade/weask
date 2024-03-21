@@ -15,14 +15,7 @@ function Register() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const { registerUser } = useContext(AuthContext);
-
-  console.log(fullName);
-  console.log(username);
-  console.log(email);
-  console.log(username);
-  console.log(password);
-  console.log(password2);
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password === password2) {

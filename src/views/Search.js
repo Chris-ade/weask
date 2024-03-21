@@ -8,7 +8,7 @@ import "../static/css/UIkit.css";
 import Counter from "../utils/Counter";
 import CustomDate from "../utils/CustomDate";
 
-const baseURL = "http://localhost:8000/";
+const baseURL = "https://hackinubee.pythonanywhere.com/";
 
 function Search() {
   useTitle(`Search | WeAsk`);

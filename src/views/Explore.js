@@ -8,7 +8,7 @@ import AuthContext from "../context/AuthContext";
 import "../static/css/UIkit.css";
 import NoPage from "./NoPage";
 
-const baseURL = "http://localhost:8000/";
+const baseURL = "https://hackinubee.pythonanywhere.com/";
 
 function Explore() {
   useTitle("Explore Categories | WeAsk");

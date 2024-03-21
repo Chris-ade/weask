@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 
 const SideNav = () => {
-  const baseURL = "http://localhost:8000/";
+  const baseURL = "https://hackinubee.pythonanywhere.com/";
   const { user } = useContext(AuthContext);
 
   return (
