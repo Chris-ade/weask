@@ -62,6 +62,7 @@ export const AuthProvider = ({ children }) => {
         timerProgressBar: true,
         showConfirmButton: false,
       });
+      throw new Error(data.detail);
     }
   };
 
