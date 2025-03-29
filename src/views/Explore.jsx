@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Wrapper from "../views/Wrapper";
+import Wrapper from "./Wrapper";
 import useTitle from "../utils/useTitle";
 import useAxios from "../utils/useAxios";
 import AuthContext from "../context/AuthContext";
@@ -8,7 +8,7 @@ import AuthContext from "../context/AuthContext";
 import "../static/css/UIkit.css";
 import NoPage from "./NoPage";
 
-const baseURL = "https://hackinubee.pythonanywhere.com/";
+const baseURL = import.meta.env.VITE_API_URL;
 
 function Explore() {
   useTitle("Explore Categories | WeAsk");

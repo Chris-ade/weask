@@ -1,8 +1,8 @@
-const swal = require("sweetalert2");
+import Swal from "sweetalert2";
 
 function Toast({ type = "success", message = "An error occurred!" }) {
   if (type === "success") {
-    swal.fire({
+    Swal.fire({
       title: message,
       icon: "success",
       toast: true,
@@ -12,7 +12,7 @@ function Toast({ type = "success", message = "An error occurred!" }) {
       showConfirmButton: false,
     });
   } else {
-    swal.fire({
+    Swal.fire({
       title: message,
       icon: "error",
       toast: true,

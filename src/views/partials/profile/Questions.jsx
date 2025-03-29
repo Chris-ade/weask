@@ -7,7 +7,7 @@ const Questions = ({ userProfile, user }) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
   const api = useAxios();
-  const baseURL = "https://hackinubee.pythonanywhere.com/";
+  const baseURL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchData = async () => {

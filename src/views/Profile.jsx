@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import Wrapper from "../views/Wrapper";
+import Wrapper from "./Wrapper";
 import useTitle from "../utils/useTitle";
 import useAxios from "../utils/useAxios";
 import AuthContext from "../context/AuthContext";
@@ -12,7 +12,7 @@ import WithAnswers from "./partials/profile/WithAnswers";
 import Likes from "./partials/profile/Likes";
 import CustomDate from "../utils/CustomDate";
 
-const baseURL = "https://hackinubee.pythonanywhere.com/";
+const baseURL = import.meta.env.VITE_API_URL;
 
 function Profile() {
   useTitle("Profile | WeAsk");
@@ -185,7 +185,8 @@ function Profile() {
                           <path d="M7 5V3"></path>
                           <path d="M17 5V3"></path>
                         </svg>{" "}
-                        Joined <CustomDate value={userProfile.date_joined} /> ago
+                        Joined <CustomDate value={userProfile.date_joined} />{" "}
+                        ago
                       </span>
                     </div>
                   </div>

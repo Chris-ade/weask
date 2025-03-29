@@ -10,12 +10,20 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [sending, setSending] = useState(false);
   const passwordField = useRef();
   const { loginUser } = useContext(AuthContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    username.length > 0 && loginUser(username, password);
+    if (username.length > 0 && password.length > 0) {
+      try {
+        setSending(true);
+        await loginUser(username, password);
+      } catch (e) {
+        setSending(false);
+      }
+    }
   };
 
   const handleFieldToggle = (e) => {
@@ -100,6 +108,7 @@ function Login() {
                       className="login-button-full"
                       type="submit"
                       style={{ fontWeight: 600 }}
+                      disabled={sending}
                     >
                       Sign In
                     </button>

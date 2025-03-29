@@ -1,6 +1,6 @@
 import React from "react";
 import LoadingBar from "../utils/LoadingBar";
-import SideNav from "../views/partials/SideNav";
+import SideNav from "./partials/SideNav";
 
 const Wrapper = ({ children }) => {
   return (

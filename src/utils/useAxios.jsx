@@ -5,7 +5,7 @@ import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 
-const baseURL = "https://hackinubee.pythonanywhere.com/api";
+const baseURL = import.meta.env.VITE_API_URL;
 
 const useAxios = () => {
   const { authTokens, setUser, setAuthTokens } = useContext(AuthContext);

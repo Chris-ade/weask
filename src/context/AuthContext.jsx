@@ -1,10 +1,11 @@
 import { createContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-const swal = require("sweetalert2");
+import Swal from "sweetalert2";
+
+const baseURL = import.meta.env.VITE_API_URL;
 
 const AuthContext = createContext();
-
 export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
@@ -25,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const loginUser = async (username, password) => {
-    const response = await fetch("https://hackinubee.pythonanywhere.com/api/token/", {
+    const response = await fetch(`${baseURL}/api/token/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +43,7 @@ export const AuthProvider = ({ children }) => {
       setUser(jwtDecode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
       navigate("/");
-      swal.fire({
+      Swal.fire({
         title: "Login Successful",
         icon: "success",
         toast: true,
@@ -52,7 +53,7 @@ export const AuthProvider = ({ children }) => {
         showConfirmButton: false,
       });
     } else {
-      swal.fire({
+      Swal.fire({
         title: "Username or password does not exists.",
         icon: "error",
         toast: true,
@@ -65,7 +66,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const registerUser = async (email, username, password, password2) => {
-    const response = await fetch("https://hackinubee.pythonanywhere.com/api/register/", {
+    const response = await fetch(`${baseURL}/api/register/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +80,7 @@ export const AuthProvider = ({ children }) => {
     });
     if (response.status === 201) {
       navigate("/login");
-      swal.fire({
+      Swal.fire({
         title: "Registration Successful, Login Now",
         icon: "success",
         toast: true,
@@ -89,7 +90,7 @@ export const AuthProvider = ({ children }) => {
         showConfirmButton: false,
       });
     } else {
-      swal.fire({
+      Swal.fire({
         title: "An Error Occured " + response.status,
         icon: "error",
         toast: true,
@@ -106,7 +107,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem("authTokens");
     navigate("/login");
-    swal.fire({
+    Swal.fire({
       title: "You have been logged out...",
       icon: "success",
       toast: true,

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Wrapper from "../views/Wrapper";
+import Wrapper from "./Wrapper";
 import useTitle from "../utils/useTitle";
 import useAxios from "../utils/useAxios";
 
@@ -8,7 +8,7 @@ import "../static/css/UIkit.css";
 import Counter from "../utils/Counter";
 import CustomDate from "../utils/CustomDate";
 
-const baseURL = "https://hackinubee.pythonanywhere.com/";
+const baseURL = import.meta.env.VITE_API_URL;
 
 function Search() {
   useTitle(`Search | WeAsk`);
@@ -152,7 +152,9 @@ function Search() {
                     </Link>
                   </span>
                   <div className="stats">
-                    <span>Posted <CustomDate value={q.created_at} /> ago</span>
+                    <span>
+                      Posted <CustomDate value={q.created_at} /> ago
+                    </span>
                   </div>
                   <div className="ui-search-footer">
                     <div className="ui-count">

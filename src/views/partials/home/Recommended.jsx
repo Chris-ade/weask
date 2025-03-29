@@ -6,9 +6,9 @@ import AuthContext from "../../../context/AuthContext";
 import "../../../static/css/UIkit.css";
 import CustomDate from "../../../utils/CustomDate";
 
-const baseURL = "https://hackinubee.pythonanywhere.com/";
+const baseURL = import.meta.env.VITE_API_URL;
 
-function Questions() {
+function Recommended() {
   const { user } = useContext(AuthContext);
   const [questions, setQuestions] = useState("");
   const api = useAxios();
@@ -20,7 +20,7 @@ function Questions() {
     const fetchData = async () => {
       setContentLoading(true);
       try {
-        const response = await api.get(`/questions/`);
+        const response = await api.get(`/recommended/`);
         if (response.data.success) {
           setQuestions(response.data.questions);
         } else {
@@ -57,6 +57,11 @@ function Questions() {
             </div>
           ) : (
             <div>
+              <div className="inline-text-wrapper">
+                <div className="inline-text">
+                  <span>Recommended</span>
+                </div>
+              </div>
               {questions ? (
                 <div>
                   {questions.map((q, index) => (
@@ -143,7 +148,7 @@ function Questions() {
                 <div className="p-4">
                   <h3 className="text-xl font-bold">You're all caught up.</h3>
                   <div className="mt-2">
-                    <p> Questions will show up here. </p>
+                    <p> Recommended questions will show up here. </p>
                   </div>
                 </div>
               )}
@@ -155,4 +160,4 @@ function Questions() {
   );
 }
 
-export default Questions;
+export default Recommended;

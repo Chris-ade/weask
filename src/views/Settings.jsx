@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Wrapper from "../views/Wrapper";
+import Wrapper from "./Wrapper";
 import useTitle from "../utils/useTitle";
 import useAxios from "../utils/useAxios";
 import AuthContext from "../context/AuthContext";
@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import "../static/css/UIkit.css";
 import NoPage from "./NoPage";
 
-const baseURL = "https://hackinubee.pythonanywhere.com/";
+const baseURL = import.meta.env.VITE_API_URL;
 
 function Settings() {
   useTitle("Profile Settings | WeAsk");
@@ -117,7 +117,10 @@ function Settings() {
                     className="ui-profile-header-thumb cover-bg"
                     id="cover_picture"
                   >
-                    <img src={baseURL + userProfile.cover} alt={`${userProfile.username}'s avatar`} />
+                    <img
+                      src={baseURL + userProfile.cover}
+                      alt={`${userProfile.username}'s avatar`}
+                    />
                     <div className="cover-overlay"></div>
                     <Link className="cover-button" id="change_avatar">
                       <svg
