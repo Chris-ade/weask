@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const loginUser = async (username, password) => {
-    const response = await fetch(`${baseURL}/api/token/`, {
+    const response = await fetch(`${baseURL}/token/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const registerUser = async (email, username, password, password2) => {
-    const response = await fetch(`${baseURL}/api/register/`, {
+    const response = await fetch(`${baseURL}/register/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
