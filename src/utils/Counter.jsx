@@ -10,6 +10,7 @@ const Counter = ({
   onChange,
   onClick,
   textArea = false,
+  placeholder,
 }) => {
   const [remaining, setRemaining] = useState(max);
 
@@ -50,7 +51,8 @@ const Counter = ({
           className={`${className} character-counter-input`}
           type="text"
           onChange={handleChange}
-          style={{ paddingRight: "35px" }}
+          style={{ paddingRight: "35px", height: "50px" }}
+          placeholder={placeholder}
           required
         />
       ) : (

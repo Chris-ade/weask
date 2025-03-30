@@ -7,7 +7,7 @@ const WithAnswers = ({ userProfile, user }) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
   const api = useAxios();
-  const baseURL = import.meta.env.VITE_API_URL;
+  const baseURL = import.meta.env.VITE_BASE_URL;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,7 +47,7 @@ const WithAnswers = ({ userProfile, user }) => {
               >
                 <div className="question-block">
                   <Link
-                    to={`/view/question/${q.question.category.slug}/${q.question.id}`}
+                    to={`/question/${q.question.category.slug}/${q.question.id}`}
                     className="question-title is-link"
                   >
                     {q.question.title}
@@ -72,30 +72,13 @@ const WithAnswers = ({ userProfile, user }) => {
                     </div>
                     <div className="question-footer">
                       <div className="likes">
-                        <svg
-                          role="img"
-                          className="icon icon--16"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M12,21 L10.55,19.7051771 C5.4,15.1242507 2,12.1029973 2,8.39509537 C2,5.37384196 4.42,3 7.5,3 C9.24,3 10.91,3.79455041 12,5.05013624 C13.09,3.79455041 14.76,3 16.5,3 C19.58,3 22,5.37384196 22,8.39509537 C22,12.1029973 18.6,15.1242507 13.45,19.7149864 L12,21 Z"></path>
-                        </svg>
+                        <i className="far fa-heart"></i>
                         <span>{q.likes.length}</span>
                       </div>
                       {q.accepted && (
                         <div className="answers-count">
-                          <svg
-                            role="img"
-                            className="icon icon--16"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            aria-labelledby="accepted-icon"
-                          >
-                            <title id="accepted-icon">Accepted</title>
-                            <polyline points="4 13 9 18 20 7"></polyline>
-                          </svg>
-                          <span> Accepted </span>
+                          <i className="far fa-check me-1"></i>
+                          <span>Accepted</span>
                         </div>
                       )}
                     </div>

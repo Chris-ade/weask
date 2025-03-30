@@ -5,10 +5,7 @@ import useTitle from "../utils/useTitle";
 import useAxios from "../utils/useAxios";
 import AuthContext from "../context/AuthContext";
 
-import "../static/css/UIkit.css";
-import NoPage from "./NoPage";
-
-const baseURL = import.meta.env.VITE_API_URL;
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 function Explore() {
   useTitle("Explore Categories | WeAsk");
@@ -66,7 +63,7 @@ function Explore() {
                                 to="/category/sci-and-tech"
                               >
                                 <img
-                                  src={baseURL + "static/icons/lightbulb.svg"}
+                                  src={"/icons/lightbulb.svg"}
                                   alt="sci-and-tech icon"
                                 />
                                 <div className="box-content">
@@ -85,10 +82,7 @@ function Explore() {
                                 className="tile is-child category-box"
                                 to="/category/books"
                               >
-                                <img
-                                  src={baseURL + "static/icons/book.svg"}
-                                  alt="books icon"
-                                />
+                                <img src={"/icons/book.svg"} alt="books icon" />
                                 <div className="box-content">
                                   <h3 className="title is-6">
                                     Books & Reading
@@ -108,7 +102,7 @@ function Explore() {
                                 to="/category/movies"
                               >
                                 <img
-                                  src={baseURL + "static/icons/tv.svg"}
+                                  src={"/icons/tv.svg"}
                                   alt="movies and tv icon"
                                 />
                                 <div className="box-content">
@@ -127,7 +121,7 @@ function Explore() {
                                 to="/category/general"
                               >
                                 <img
-                                  src={baseURL + "static/icons/chat-alt.svg"}
+                                  src={"icons/chat-alt.svg"}
                                   alt="general icon"
                                 />
                                 <div className="box-content">
@@ -147,7 +141,7 @@ function Explore() {
                               to="/category/sports-and-fitness"
                             >
                               <img
-                                src={baseURL + "static/icons/basketball.svg"}
+                                src={"/icons/basketball.svg"}
                                 alt="sports and fitness icon"
                               />
                               <div className="box-content">
@@ -167,10 +161,7 @@ function Explore() {
                             className="tile is-child category-box is-taller"
                             to="/category/travels"
                           >
-                            <img
-                              src={baseURL + "static/icons/plane.svg"}
-                              alt="travels icon"
-                            />
+                            <img src={"/icons/plane.svg"} alt="travels icon" />
                             <div className="box-content">
                               <h3 className="title is-6">Travels</h3>
                               <p>
@@ -185,7 +176,7 @@ function Explore() {
                             to="/category/business"
                           >
                             <img
-                              src={baseURL + "static/icons/suitcase.svg"}
+                              src={"/icons/suitcase.svg"}
                               alt="business icon"
                             />
                             <div className="box-content">
@@ -208,7 +199,7 @@ function Explore() {
                             to="/category/programming"
                           >
                             <img
-                              src={baseURL + "static/icons/code-alt.svg"}
+                              src={"/icons/code-alt.svg"}
                               alt="programming icon"
                             />
                             <div className="box-content">
@@ -225,7 +216,7 @@ function Explore() {
                             to="/category/automotives"
                           >
                             <img
-                              src={baseURL + "static/icons/bike.svg"}
+                              src={"/icons/bike.svg"}
                               alt="cars and automotives icon"
                             />
                             <div className="box-content">
@@ -246,7 +237,7 @@ function Explore() {
                                 to="/category/relationships"
                               >
                                 <img
-                                  src={baseURL + "static/icons/favourite.svg"}
+                                  src={"/icons/favourite.svg"}
                                   alt="relationships icon"
                                 />
                                 <div className="box-content">
@@ -264,7 +255,7 @@ function Explore() {
                                 to="/category/graphics"
                               >
                                 <img
-                                  src={baseURL + "static/icons/aperture.svg"}
+                                  src={"/icons/aperture.svg"}
                                   alt="graphics design icon"
                                 />
                                 <div className="box-content">
@@ -286,7 +277,7 @@ function Explore() {
                                 to="/category/health"
                               >
                                 <img
-                                  src={baseURL + "static/icons/activity.svg"}
+                                  src={"/icons/activity.svg"}
                                   alt="health icon"
                                 />
                                 <div className="box-content">
@@ -304,7 +295,7 @@ function Explore() {
                                 to="/category/entertainment'"
                               >
                                 <img
-                                  src={baseURL + "static/icons/music.svg"}
+                                  src={"/icons/music.svg"}
                                   alt="entertainment icon"
                                 />
                                 <div className="box-content">
@@ -324,7 +315,7 @@ function Explore() {
                               to="/category/astronomy"
                             >
                               <img
-                                src={baseURL + "static/icons/rocket.svg"}
+                                src={"/icons/rocket.svg"}
                                 className=""
                                 alt="astronomy icon"
                               />

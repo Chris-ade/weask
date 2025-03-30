@@ -1,27 +1,55 @@
-import Swal from "sweetalert2";
+import { useSnackbar } from "notistack";
 
-function Toast({ type = "success", message = "An error occurred!" }) {
-  if (type === "success") {
-    Swal.fire({
-      title: message,
-      icon: "success",
-      toast: true,
-      timer: 6000,
-      position: "top-right",
-      timerProgressBar: true,
-      showConfirmButton: false,
-    });
-  } else {
-    Swal.fire({
-      title: message,
-      icon: "error",
-      toast: true,
-      timer: 6000,
-      position: "top-right",
-      timerProgressBar: true,
-      showConfirmButton: false,
-    });
-  }
-}
+const useToast = () => {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-export default Toast;
+  const toastSuccess = (message) =>
+    enqueueSnackbar(message, {
+      style: {
+        backgroundColor: "#d1e9fe",
+        color: "#1d1d37",
+      },
+      preventDuplicate: true,
+      variant: "success",
+      disableWindowBlurListener: true,
+      anchorOrigin: {
+        vertical: "bottom",
+        horizontal: "center",
+      },
+    });
+
+  const toastError = (message) =>
+    enqueueSnackbar(message, {
+      preventDuplicate: true,
+      variant: "error",
+      disableWindowBlurListener: true,
+      anchorOrigin: {
+        vertical: "bottom",
+        horizontal: "center",
+      },
+    });
+
+  const toastDefault = (message) =>
+    enqueueSnackbar(message, {
+      preventDuplicate: true,
+      variant: "default",
+      anchorOrigin: {
+        vertical: "bottom",
+        horizontal: "center",
+      },
+    });
+
+  const toastWarning = (message) =>
+    enqueueSnackbar(message, {
+      preventDuplicate: true,
+      variant: "warning",
+      anchorOrigin: {
+        vertical: "bottom",
+        horizontal: "center",
+      },
+    });
+
+  return { toastSuccess, toastError, toastDefault, toastWarning };
+};
+
+export { useToast };

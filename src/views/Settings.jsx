@@ -4,22 +4,20 @@ import Wrapper from "./Wrapper";
 import useTitle from "../utils/useTitle";
 import useAxios from "../utils/useAxios";
 import AuthContext from "../context/AuthContext";
-
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.min.css";
-
-import "../static/css/UIkit.css";
 import NoPage from "./NoPage";
+import { useToast } from "../utils/useToast";
 
-const baseURL = import.meta.env.VITE_API_URL;
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 function Settings() {
   useTitle("Profile Settings | WeAsk");
   const { user } = useContext(AuthContext);
+  const { toastSuccess, toastError } = useToast();
   const [userProfile, setUserProfile] = useState("");
   const api = useAxios();
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
   const [bio, setBio] = useState("");
   const [location, setLocation] = useState("");
@@ -31,7 +29,7 @@ function Settings() {
         {
           response.data.success
             ? setUserProfile(response.data.user)
-            : setErrorMessage(response.data.message);
+            : toastError(response.data.message);
         }
         setBio(response.data.user.bio);
         setLocation(response.data.user.location);
@@ -45,6 +43,7 @@ function Settings() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSaving(true);
 
     try {
       const response = await api.patch(
@@ -65,12 +64,15 @@ function Settings() {
           bio: response.data.user.bio,
           location: response.data.user.location,
         });
-        toast(response.data.message);
+        toastSuccess(response.data.message);
       } else {
-        setErrorMessage(response.data.message);
+        toastError(response.data.message);
       }
     } catch (error) {
       // Handle error
+      setSaving(false);
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -84,33 +86,24 @@ function Settings() {
           </div>
         </div>
       ) : (
-        <div>
+        <div style={{ maxWidth: "1120px", margin: "0 auto" }}>
           {userProfile ? (
             <div>
-              <ToastContainer />
               <div className="ui-feed-header">
                 <Link
                   to={`/profile/${userProfile.username}`}
                   className="ui-feed-header-button hover:bg-gray-200 rounded-full p-2 transition"
                 >
-                  <svg
-                    className="icon icon--20"
-                    role="img"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M9 6l-6 6 6 6"></path>
-                    <path d="M21 12H4"></path>
-                    <path strokeLinecap="round" d="M3 12h1"></path>
-                  </svg>
+                  <i className="far fa-arrow-left"></i>
                 </Link>
                 <div className="ui-feed-header-title">Profile Settings</div>
               </div>
               <div
                 className="ui-block ui-profile"
-                style={{ marginTop: "60px" }}
+                style={{
+                  marginTop: "48px",
+                  marginBottom: "80px",
+                }}
               >
                 <div className="ui-profile-header">
                   <div
@@ -123,34 +116,10 @@ function Settings() {
                     />
                     <div className="cover-overlay"></div>
                     <Link className="cover-button" id="change_avatar">
-                      <svg
-                        className="icon"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                      >
-                        <rect width="18" height="18" x="3" y="3"></rect>
-                        <path strokeLinecap="round" d="M3 14l4-4 11 11"></path>
-                        <circle cx="13.5" cy="7.5" r="2.5"></circle>
-                        <path strokeLinecap="round" d="M13.5 16.5L21 9"></path>
-                      </svg>
+                      <i className="far fa-image"></i>
                     </Link>
                     <Link className="cover-button is-right" id="change_cover">
-                      <svg
-                        className="icon"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        aria-labelledby="cover-icon"
-                      >
-                        <title id="cover-icon">Change cover</title>
-                        <rect width="13" height="13" x="3" y="3"></rect>
-                        <polyline points="16 8 21 8 21 21 8 21 8 16"></polyline>
-                      </svg>
+                      <i className="far fa-copy"></i>
                     </Link>
                   </div>
 
@@ -175,13 +144,6 @@ function Settings() {
                       enctype="multipart/form-data"
                       style={{ paddingBottom: "10px" }}
                     >
-                      {errorMessage && (
-                        <div className="notification-box notification-box-extra notification-box-error">
-                          <p>{errorMessage}</p>
-                          <div className="notification-close notification-close-error"></div>
-                        </div>
-                      )}
-
                       <input
                         type="hidden"
                         className="is-hidden"
@@ -192,67 +154,71 @@ function Settings() {
                         className="is-hidden"
                         id="profile_picture_field"
                       />
-                      <div className="form-group label-floating">
-                        <label className="control-label">Name</label>
+                      <div className="form-floating mb-3">
                         <input
+                          id="name"
                           type="text"
                           className="form-control"
                           value={userProfile.name}
                           readOnly
                         />
-                        <p className="material-input p-1">
-                          You can't change your name.
-                        </p>
+                        <label htmlFor="name">Name</label>
+                        <p className="form-text">You can't change your name.</p>
                       </div>
 
-                      <div className="form-group label-floating">
-                        <label className="control-label">Username</label>
+                      <div className="form-floating mb-3">
                         <input
+                          id="username"
                           type="text"
                           className="form-control"
                           value={`#${userProfile.username}`}
                           readOnly
                         />
-                        <p className="material-input p-1">
+                        <label htmlFor="username">Username</label>
+                        <p className="form-text">
                           You can't change your username.
                         </p>
                       </div>
 
-                      <div className="form-group label-floating">
-                        <label className="control-label">E-mail</label>
+                      <div className="form-floating mb-3">
                         <input
+                          id="email"
                           type="email"
                           className="form-control"
                           value={userProfile.email}
                           readOnly
                         />
-                        <p className="material-input p-1">
+                        <label htmlFor="email">E-mail</label>
+                        <p className="form-text">
                           You can't change your e-mail address.
                         </p>
                       </div>
 
-                      <div className="form-group label-floating">
-                        <label className="control-label">Bio</label>
+                      <div className="form-floating mb-3">
                         <textarea
+                          id="bio"
                           className="form-control"
                           rows="3"
                           onChange={(e) => setBio(e.target.value)}
                           value={bio}
+                          style={{ height: "100px" }}
                         />
-                        <p className="material-input p-1">
-                          Talk more about yourself in 150 characters
+                        <label htmlFor="bio">Bio</label>
+                        <p className="form-text">
+                          Talk more about yourself in 150 characters.
                         </p>
                       </div>
 
-                      <div className="form-group label-floating">
-                        <label className="control-label">Location</label>
+                      <div className="form-floating mb-3">
                         <input
+                          id="location"
                           type="text"
                           className="form-control"
                           onChange={(e) => setLocation(e.target.value)}
                           value={location}
                         />
-                        <p className="material-input">
+                        <label htmlFor="location">Location</label>
+                        <p className="form-text">
                           Your location helps us suggest questions to you in
                           your area.
                         </p>
@@ -263,8 +229,9 @@ function Settings() {
                           className="uk-button uk-button-primary mr-2 uk-width-1-1"
                           type="submit"
                           style={{ fontWeight: "600" }}
+                          disabled={saving}
                         >
-                          Save
+                          {saving ? "Saving..." : "Save"}
                         </button>
                       </div>
                     </form>

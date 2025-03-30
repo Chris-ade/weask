@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { useToast } from "../utils/useToast";
 
 const baseURL = import.meta.env.VITE_API_URL;
 
@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
   );
 
   const [loading, setLoading] = useState(true);
+  const { toastSuccess, toastError } = useToast();
 
   const navigate = useNavigate();
 
@@ -43,25 +44,9 @@ export const AuthProvider = ({ children }) => {
       setUser(jwtDecode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
       navigate("/");
-      Swal.fire({
-        title: "Login Successful",
-        icon: "success",
-        toast: true,
-        timer: 6000,
-        position: "top-right",
-        timerProgressBar: true,
-        showConfirmButton: false,
-      });
+      toastSuccess("Login successful.");
     } else {
-      Swal.fire({
-        title: "Username or password does not exists.",
-        icon: "error",
-        toast: true,
-        timer: 6000,
-        position: "top-right",
-        timerProgressBar: true,
-        showConfirmButton: false,
-      });
+      toastSuccess("Username and password doesn't exist.");
       throw new Error(data.detail);
     }
   };

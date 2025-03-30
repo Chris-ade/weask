@@ -3,19 +3,21 @@ import Wrapper from "./Wrapper";
 import useTitle from "../utils/useTitle";
 import useAxios from "../utils/useAxios";
 import Counter from "../utils/Counter";
-import Toast from "../utils/useToast";
+import { useToast } from "../utils/useToast";
 
 function AskQuestion() {
   useTitle("Ask a question | WeAsk");
 
   const api = useAxios();
   const form = useRef();
+  const { toastSuccess, toastError } = useToast();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("programming");
   const [categories, setCategories] = useState("");
   const [loading, setLoading] = useState(true);
+  const [sending, setSending] = useState(false);
 
   const fetchCategories = async () => {
     try {
@@ -26,7 +28,7 @@ function AskQuestion() {
         setCategories(null);
       }
     } catch (error) {
-      <Toast type="error" />;
+      toastError("An error occurred.");
       setCategories(null);
     }
     setLoading(false);
@@ -38,6 +40,7 @@ function AskQuestion() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSending(true);
     try {
       const response = await api.post(
         `question/post/`,
@@ -57,12 +60,17 @@ function AskQuestion() {
         setContent("");
         form.current.reset();
         setCategory("programming");
-        <Toast message={response.data.message} />;
+        toastError(response.data.message);
+        setSending(false);
       } else {
-        <Toast type="error" message={response.data.message} />;
+        toastError(response.data.message);
+        setSending(false);
       }
     } catch (error) {
-      <Toast type="error" />;
+      toastError("An error occurred.");
+      setSending(false);
+    } finally {
+      setSending(false);
     }
   };
 
@@ -92,49 +100,51 @@ function AskQuestion() {
                   </span>
                 </div>
                 <form ref={form} onSubmit={handleSubmit}>
-                  <div className="form-group label-floating">
-                    <label className="control-label">Title</label>
+                  <div className="mb-3">
                     <Counter
                       type="text"
                       className="form-control"
+                      id="titleInput"
+                      placeholder="Title"
                       onChange={(e) => setTitle(e.target.value)}
                       required
                     />
-                    <p className="material-input"></p>
                   </div>
 
-                  <div className="form-group label-floating">
-                    <label className="control-label">
-                      What do you want to ask in full?
-                    </label>
+                  <div className="mb-3">
                     <Counter
                       className="form-control"
+                      id="contentInput"
+                      placeholder="What do you want to ask in full?"
                       cols="100"
                       rows="3"
                       textArea={true}
                       onChange={(e) => setContent(e.target.value)}
                       required
                     />
-                    <p className="material-input"></p>
                   </div>
 
-                  <div className="form-group label-floating">
-                    <label className="control-label">Select a category</label>
+                  <div className="form-floating mb-3">
                     <select
-                      className="ui-select form-control w-full"
+                      className="form-select"
+                      id="categorySelect"
                       onChange={(e) => handleCategory(e)}
                     >
                       {categories &&
                         categories.map((c, index) => (
-                          <option value={c.slug}>{c.name}</option>
+                          <option key={index} value={c.slug}>
+                            {c.name}
+                          </option>
                         ))}
                     </select>
+                    <label htmlFor="categorySelect">Select a category</label>
                   </div>
                   <button
                     className="uk-button uk-button-primary w-full"
                     type="submit"
+                    disabled={sending}
                   >
-                    Submit
+                    {sending ? "Submitting..." : "Submit"}
                   </button>
                 </form>
               </div>

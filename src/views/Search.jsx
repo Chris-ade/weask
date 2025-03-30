@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import Wrapper from "./Wrapper";
 import useTitle from "../utils/useTitle";
 import useAxios from "../utils/useAxios";
-
-import "../static/css/UIkit.css";
 import Counter from "../utils/Counter";
 import CustomDate from "../utils/CustomDate";
 
@@ -102,8 +100,7 @@ function Search() {
             <span> You can search for categories, questions and users. </span>
           </div>
           <form onSubmit={handleSubmit}>
-            <div className="form-group label-floating">
-              <label className="control-label">Search...</label>
+            <div className="form-floating mb-3">
               <Counter
                 className="form-control"
                 inputType="search"
@@ -111,6 +108,7 @@ function Search() {
                 onKeyUp={fetchData}
                 textArea={false}
                 required
+                placeholder="Search...."
               />
             </div>
             <div className="form-group label-floating">
@@ -121,7 +119,7 @@ function Search() {
                 onChange={(e) => handleFilter(e)}
                 required
               >
-                <option value="q" selected>
+                <option value="q" defaultValue={true}>
                   Questions
                 </option>
                 <option value="c">Categories</option>
