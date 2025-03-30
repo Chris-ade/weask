@@ -56,7 +56,7 @@ function Suggestions() {
                   {categories ? (
                     <div>
                       {categories.map((c, index) => (
-                        <div className="ui-explore">
+                        <div className="ui-explore" key={index}>
                           <div className="icon">
                             <i className="fas fa-box"></i>
                             <span>
@@ -85,7 +85,7 @@ function Suggestions() {
                 </div>
               </div>
               <div className="footer-sidebar">
-                <span class="footer-item">© WeAsk</span>
+                <span className="footer-item">© WeAsk</span>
               </div>
             </div>
           )}

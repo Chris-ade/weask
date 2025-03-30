@@ -60,7 +60,7 @@ function AskQuestion() {
         setContent("");
         form.current.reset();
         setCategory("programming");
-        toastError(response.data.message);
+        toastSuccess(response.data.message);
         setSending(false);
       } else {
         toastError(response.data.message);
