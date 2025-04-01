@@ -140,7 +140,7 @@ function AskQuestion() {
                     <label htmlFor="categorySelect">Select a category</label>
                   </div>
                   <button
-                    className="uk-button uk-button-primary w-full"
+                    className="btn btn-primary w-full"
                     type="submit"
                     disabled={sending}
                   >

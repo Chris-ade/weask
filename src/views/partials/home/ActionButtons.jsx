@@ -1,7 +1,9 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
+import AuthContext from "../../../context/AuthContext";
 
 function ActionButtons() {
+  const { logoutUser } = useContext(AuthContext);
   const actionBtn = useRef();
 
   const handleToggle = (e) => {
@@ -33,9 +35,12 @@ function ActionButtons() {
             <Link className="fab-action" to="/settings">
               <i className="far fa-cog"></i>
             </Link>
-            <Link className="fab-action" to="/logout">
+            <a
+              className="fab-action cursor-pointer"
+              onClick={() => logoutUser()}
+            >
               <i className="far fa-sign-out"></i>
-            </Link>
+            </a>
           </div>
         </div>
       </div>

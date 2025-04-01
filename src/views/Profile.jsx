@@ -141,7 +141,7 @@ function Profile() {
                 </div>
               </div>
               <div className="ui-block ui-profile ui-profile-tab-wrapper">
-                <ul className="flex-nowrap lg:overflow-hidden overflow-x-scroll uk-tab ui-profile-tab px-2">
+                <ul className="flex-nowrap lg:overflow-hidden overflow-x-scroll is-ui-tab ui-profile-tab px-2">
                   <li>
                     <Link
                       onClick={fetchQuestions}

@@ -1367,7 +1367,12 @@ select.form-control {
 
 .is-sidebar .brand-logo {
   font-size: 20px;
+  font-weight: 600;
   text-align: center;
+}
+
+.is-sidebar .brand-icon i {
+  font-size: 22px;
 }
 
 .is-sidebar .is-item-wrapper {
@@ -1402,7 +1407,6 @@ select.form-control {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
     color: #009B77;
   }
 
@@ -1478,6 +1482,8 @@ select.form-control {
   width: 36px;
   height: 36px;
   border-radius: 9999px;
+  object-fit: cover;
+  object-position: top center;
 }
 
 .is-sidebar .is-item-profile .is-user-name {
@@ -2138,12 +2144,20 @@ select.form-control {
   padding: 2px 4px;
 }
 
-.uk-button {
+.btn {
   font-size: 15px;
 }
 
-.uk-button.uk-button-primary {
-  background: #009B77 !important;
+.btn.btn-primary {
+  color: #fff;
+  background: #009B77;
+  border: 0;
+}
+
+.btn.btn-primary:hover {
+  border: 2px solid #009B77;
+  background: #fff;
+  color: #212529;
 }
 
 .ui-search {
@@ -2214,10 +2228,10 @@ select.form-control {
   margin-right: 8px;
 }
 
-.ui-search .ui-search-footer div svg {
+.ui-search .ui-search-footer div i {
   width: 16px;
   height: 16px;
-  stroke: #515365;
+  color: #515365;
   margin-right: 4px;
 }
 
@@ -2251,6 +2265,8 @@ select.form-control {
   width: 45px;
   height: 45px;
   border-radius: 8px;
+  object-fit: cover;
+  object-position: top center;
 }
 
 .ui-search.ui-user .ui-details {
@@ -2305,6 +2321,11 @@ select.form-control {
   color: #fff;
   animation: blink 3s ease infinite;
   transition: all 0.3s ease;
+}
+
+.ui-explore-container {
+  position: sticky;
+  top: 6px;
 }
 
 .ui-explore-sidebar {
@@ -2638,4 +2659,67 @@ select.form-control {
   flex-grow: 1;
   flex-direction: row;
   width: 100%;
+  padding-bottom: 38px;
+}
+
+.is-arrow-back {
+  font-size: 17px;
+}
+
+.is-ui-tab {
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+  list-style: none;
+  position: relative;
+}
+
+.is-ui-tab>* {
+  position: relative;
+}
+
+.is-ui-tab>*>a {
+  /* 1 */
+  display: block;
+  text-align: center;
+  /* 2 */
+  padding: 10px 10px;
+  color: #929292;
+  width: 100%;
+  transition: color 0.1s ease-in-out;
+}
+
+/* Hover + Focus */
+.is-ui-tab>*>a:hover,
+.is-ui-tab>*>a:focus {
+  color: #666;
+  text-decoration: none;
+}
+
+/* Active */
+.is-ui-tab>li>a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.is-ui-tab>li>a>span {
+  opacity: 0;
+  width: 8px;
+  height: 8px;
+  margin: 0 auto;
+  background: #009B77;
+  border-radius: 50px;
+}
+
+.is-ui-tab>li>a:hover>span,
+.is-ui-tab>li>a.active>span {
+  opacity: 1;
+}
+
+/* Disabled */
+.is-ui-tab>.uk-disabled>a {
+  color: #999;
 }

@@ -6,7 +6,7 @@ import useAxios from "../utils/useAxios";
 import Counter from "../utils/Counter";
 import CustomDate from "../utils/CustomDate";
 
-const baseURL = import.meta.env.VITE_API_URL;
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 function Search() {
   useTitle(`Search | WeAsk`);
@@ -22,6 +22,7 @@ function Search() {
 
   const [noResult, setNoResult] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [sending, setSending] = useState(false);
 
   const handleFilter = async (e) => {
     const selectedFilter = e.target.value;
@@ -46,6 +47,7 @@ function Search() {
     setResult([]);
     setCount("");
     setNoResult(false);
+    setSending(true);
 
     try {
       const response = await api.post(
@@ -65,6 +67,7 @@ function Search() {
           setCount(response.data.result_count);
           setResult(response.data.questions);
           setNoResult(false);
+          setSending(false);
         } else if (
           response.data.success &&
           response.data.context === "categories"
@@ -72,16 +75,20 @@ function Search() {
           setCount(response.data.result_count);
           setResult(response.data.categories);
           setNoResult(false);
+          setSending(false);
         } else {
           setCount(response.data.result_count);
           setResult(response.data.users);
           setNoResult(false);
+          setSending(false);
         }
       } else {
         setNoResult(true);
+        setSending(false);
       }
     } catch (error) {
       // Handle error
+      setSending(false);
     }
   };
 
@@ -128,9 +135,10 @@ function Search() {
             </div>
             <button
               type="submit"
-              className="uk-button uk-button-default w-full"
+              className="btn btn-primary w-full"
+              disabled={sending}
             >
-              Search
+              {sending ? "Searching..." : "Search"}
             </button>
           </form>
         </div>
@@ -140,10 +148,12 @@ function Search() {
             <div className="py-4" id="search_content">
               <div className="ui-search-header">
                 <h5 className="font-bold text-xl">Result</h5>
-                <span>Found {`${count} questions`}</span>
+                <span>
+                  Found {count} {count > 1 ? "questions" : "question"}
+                </span>
               </div>
               {result.map((q, index) => (
-                <div className="ui-search">
+                <div className="ui-search" key={index}>
                   <span>
                     <Link to={`/question/${q.category.slug}/${q.id}`}>
                       {q.title}
@@ -157,45 +167,15 @@ function Search() {
                   <div className="ui-search-footer">
                     <div className="ui-count">
                       <div>
-                        <svg
-                          role="img"
-                          className="icon {% if request.user in q.likes.all %}is-liked{% endif %}"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M12,21 L10.55,19.7051771 C5.4,15.1242507 2,12.1029973 2,8.39509537 C2,5.37384196 4.42,3 7.5,3 C9.24,3 10.91,3.79455041 12,5.05013624 C13.09,3.79455041 14.76,3 16.5,3 C19.58,3 22,5.37384196 22,8.39509537 C22,12.1029973 18.6,15.1242507 13.45,19.7149864 L12,21 Z"></path>
-                        </svg>{" "}
-                        {q.likes_count}
+                        <i className="far fa-heart me-1"></i> {q.likes_count}
                       </div>
                       <div>
-                        <svg
-                          className="icon"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                        </svg>{" "}
+                        <i className="far fa-comments-alt me-1"></i>
                         {q.answers_count}
                       </div>
                     </div>
                     <div>
-                      <svg
-                        className="icon"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M3 13H9V16H15V13H21"></path>
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M3 13L5 4H19L21 13V20H3V13Z"
-                        ></path>
-                        <path d="M7 7H17"></path>
-                        <path d="M6.5 10H17.5"></path>
-                      </svg>{" "}
+                      <i className="far fa-box me-1"></i>
                       {q.category}
                     </div>
                   </div>
@@ -208,25 +188,17 @@ function Search() {
             <div className="py-4" id="search_content">
               <div className="ui-search-header">
                 <h5 className="font-bold text-xl">Result</h5>
-                <span>Found {`${count} categories`}</span>
+                <span>
+                  Found {count} {count > 1 ? "categories" : "category"}
+                </span>
               </div>
               {result.map((c, index) => (
-                <div className="ui-search ui-category">
+                <div className="ui-search ui-category" key={index}>
                   <Link to={`/category/${c.slug}`}>{c.name}</Link>
                   <div className="ui-search-footer mt-2">
                     <div className="ui-count">
                       <div>
-                        <svg
-                          className="icon"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                        </svg>{" "}
+                        <i className="far fa-comments-alt me-1"></i>
                         {c.questions_count}
                       </div>
                     </div>
@@ -241,10 +213,12 @@ function Search() {
             <div className="py-4" id="search_content">
               <div className="ui-search-header">
                 <h5 className="font-bold text-xl">Result</h5>
-                <span>Found {`${count} users`}</span>
+                <span>
+                  Found {count} {count > 1 ? "users" : "user"}
+                </span>
               </div>
               {result.map((u, index) => (
-                <div className="ui-search ui-user">
+                <div className="ui-search ui-user" key={index}>
                   <div className="ui-thumb">
                     <img
                       src={baseURL + u.avatar}

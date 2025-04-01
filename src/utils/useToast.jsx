@@ -6,8 +6,8 @@ const useToast = () => {
   const toastSuccess = (message) =>
     enqueueSnackbar(message, {
       style: {
-        backgroundColor: "#d1e9fe",
-        color: "#1d1d37",
+        backgroundColor: "#27ae60",
+        color: "#fff",
       },
       preventDuplicate: true,
       variant: "success",

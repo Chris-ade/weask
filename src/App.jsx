@@ -7,7 +7,7 @@ import { SnackbarProvider } from "notistack";
 import "./static/css/all.min.css";
 import "./static/css/Bootstrap.css";
 import "./static/css/App.css";
-import "./static/css/App2.css";
+import "./static/css/Pry.css";
 import "./static/css/Tailwind.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 
@@ -22,7 +22,6 @@ import Question from "./views/Question";
 import Search from "./views/Search";
 import Home from "./views/Home";
 import AskQuestion from "./views/AskQuestion";
-import Logout from "./views/Logout";
 
 function App() {
   return (
@@ -31,7 +30,6 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/logout" element={<Logout />} />
             <Route path="/register" element={<Register />} />
             <Route element={<PrivateRoute />}>
               <Route path="/" element={<Home />} />

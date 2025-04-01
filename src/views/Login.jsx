@@ -114,7 +114,7 @@ function Login() {
             </div>
           </div>
         </div>
-        <footer className="is-footer">
+        <footer className="is-footer pb-4">
           <p>
             &copy; 2022 - Chris Adebiyi |{" "}
             <a href="https://chrisdev-bay.vercel.app" target="_blank">

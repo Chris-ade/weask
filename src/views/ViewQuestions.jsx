@@ -80,7 +80,7 @@ function ViewQuestions() {
                       <div
                         className="question-content"
                         id={`question${q.id}`}
-                        key={q.id}
+                        key={index}
                       >
                         <div className="question-block">
                           <Link

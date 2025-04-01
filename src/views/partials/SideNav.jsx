@@ -4,7 +4,7 @@ import AuthContext from "../../context/AuthContext";
 
 const SideNav = () => {
   const baseURL = import.meta.env.VITE_BASE_URL;
-  const { user } = useContext(AuthContext);
+  const { user, logoutUser } = useContext(AuthContext);
 
   return (
     <>
@@ -31,10 +31,13 @@ const SideNav = () => {
                   <i className="far fa-search"></i>
                   <span className="ml-2 text-sm font-medium">Search</span>
                 </Link>
-                <Link className="is-item" to="/logout">
+                <a
+                  className="is-item cursor-pointer"
+                  onClick={() => logoutUser()}
+                >
                   <i className="far fa-sign-out"></i>
                   <span className="ml-2 text-sm font-medium">Logout</span>
-                </Link>
+                </a>
               </div>
             </div>
             <Link

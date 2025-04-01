@@ -62,10 +62,7 @@ function Explore() {
                                 className="tile is-child category-box"
                                 to="/category/sci-and-tech"
                               >
-                                <img
-                                  src={"/icons/lightbulb.svg"}
-                                  alt="sci-and-tech icon"
-                                />
+                                <i className="far fa-atom-simple"></i>
                                 <div className="box-content">
                                   <h3 className="title is-6">
                                     Science & Technology
@@ -82,7 +79,7 @@ function Explore() {
                                 className="tile is-child category-box"
                                 to="/category/books"
                               >
-                                <img src={"/icons/book.svg"} alt="books icon" />
+                                <i className="fas fa-book-open-reader"></i>
                                 <div className="box-content">
                                   <h3 className="title is-6">
                                     Books & Reading
@@ -101,10 +98,7 @@ function Explore() {
                                 className="tile is-child category-box"
                                 to="/category/movies"
                               >
-                                <img
-                                  src={"/icons/tv.svg"}
-                                  alt="movies and tv icon"
-                                />
+                                <i className="far fa-film"></i>
                                 <div className="box-content">
                                   <h3 className="title is-6">
                                     Movies & TV Series
@@ -120,10 +114,7 @@ function Explore() {
                                 className="tile is-child category-box"
                                 to="/category/general"
                               >
-                                <img
-                                  src={"icons/chat-alt.svg"}
-                                  alt="general icon"
-                                />
+                                <i className="far fa-comments-alt"></i>
                                 <div className="box-content">
                                   <h3 className="title is-6">General</h3>
                                   <p>
@@ -140,10 +131,7 @@ function Explore() {
                               className="tile is-child category-box"
                               to="/category/sports-and-fitness"
                             >
-                              <img
-                                src={"/icons/basketball.svg"}
-                                alt="sports and fitness icon"
-                              />
+                              <i className="far fa-tennis-ball"></i>
                               <div className="box-content">
                                 <h3 className="title is-6">Sports & Fitness</h3>
                                 <p>
@@ -161,7 +149,7 @@ function Explore() {
                             className="tile is-child category-box is-taller"
                             to="/category/travels"
                           >
-                            <img src={"/icons/plane.svg"} alt="travels icon" />
+                            <i className="far fa-plane"></i>
                             <div className="box-content">
                               <h3 className="title is-6">Travels</h3>
                               <p>
@@ -175,10 +163,7 @@ function Explore() {
                             className="tile is-child category-box is-taller"
                             to="/category/business"
                           >
-                            <img
-                              src={"/icons/suitcase.svg"}
-                              alt="business icon"
-                            />
+                            <i className="fas fa-suitcase"></i>
                             <div className="box-content">
                               <h3 className="title is-6">Business</h3>
                               <p>
@@ -198,10 +183,7 @@ function Explore() {
                             className="tile is-child category-box is-taller"
                             to="/category/programming"
                           >
-                            <img
-                              src={"/icons/code-alt.svg"}
-                              alt="programming icon"
-                            />
+                            <i className="fas fa-code"></i>
                             <div className="box-content">
                               <h3 className="title is-6">Programming</h3>
                               <p>
@@ -215,10 +197,7 @@ function Explore() {
                             className="tile is-child category-box is-taller"
                             to="/category/automotives"
                           >
-                            <img
-                              src={"/icons/bike.svg"}
-                              alt="cars and automotives icon"
-                            />
+                            <i className="fas fa-car"></i>
                             <div className="box-content">
                               <h3 className="title is-6">Cars & Automotives</h3>
                               <p>
@@ -236,10 +215,7 @@ function Explore() {
                                 className="tile is-child category-box"
                                 to="/category/relationships"
                               >
-                                <img
-                                  src={"/icons/favourite.svg"}
-                                  alt="relationships icon"
-                                />
+                                <i className="far fa-heart"></i>
                                 <div className="box-content">
                                   <h3 className="title is-6">Relationships</h3>
                                   <p>
@@ -254,10 +230,7 @@ function Explore() {
                                 className="tile is-child category-box"
                                 to="/category/graphics"
                               >
-                                <img
-                                  src={"/icons/aperture.svg"}
-                                  alt="graphics design icon"
-                                />
+                                <i className="fas fa-pen-nib"></i>
                                 <div className="box-content">
                                   <h3 className="title is-6">
                                     Graphics & Designs
@@ -276,10 +249,7 @@ function Explore() {
                                 className="tile is-child category-box"
                                 to="/category/health"
                               >
-                                <img
-                                  src={"/icons/activity.svg"}
-                                  alt="health icon"
-                                />
+                                <i className="fas fa-star-of-life"></i>
                                 <div className="box-content">
                                   <h3 className="title is-6">Health</h3>
                                   <p>
@@ -294,10 +264,7 @@ function Explore() {
                                 className="tile is-child category-box"
                                 to="/category/entertainment'"
                               >
-                                <img
-                                  src={"/icons/music.svg"}
-                                  alt="entertainment icon"
-                                />
+                                <i className="fas fa-music"></i>
                                 <div className="box-content">
                                   <h3 className="title is-6">Entertainment</h3>
                                   <p>
@@ -314,11 +281,7 @@ function Explore() {
                               className="tile is-child category-box"
                               to="/category/astronomy"
                             >
-                              <img
-                                src={"/icons/rocket.svg"}
-                                className=""
-                                alt="astronomy icon"
-                              />
+                              <i className="far fa-rocket-launch"></i>
                               <div className="box-content is-6">
                                 <h3 className="title">Astronomy</h3>
                                 <p>

@@ -40,7 +40,7 @@ function Suggestions() {
           </div>
         </div>
       ) : (
-        <div>
+        <div className="ui-explore-container">
           {contentLoading ? (
             <div className="is-loading" style={{ height: "100vh" }}>
               <span>Loading...</span>
@@ -85,7 +85,7 @@ function Suggestions() {
                 </div>
               </div>
               <div className="footer-sidebar">
-                <span className="footer-item">© WeAsk</span>
+                <span className="footer-item">© WeAsk | 2022</span>
               </div>
             </div>
           )}

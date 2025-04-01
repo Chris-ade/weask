@@ -93,15 +93,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem("authTokens");
     navigate("/login");
-    Swal.fire({
-      title: "You have been logged out...",
-      icon: "success",
-      toast: true,
-      timer: 6000,
-      position: "top-right",
-      timerProgressBar: true,
-      showConfirmButton: false,
-    });
+    toastSuccess("Logged out.");
   };
 
   const contextData = {
