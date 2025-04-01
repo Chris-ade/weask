@@ -24,73 +24,67 @@ function Question() {
   const [comment, setComment] = useState("");
   const [categoryName, setCategoryName] = useState("");
   const [categorySlug, setCategorySlug] = useState("");
-
-  const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [contentLoading, setContentLoading] = useState(true);
 
   const fetchData = async () => {
     try {
       const response = await api.get(`/question/${slug}/${id}/`);
-      if (response.data.success) {
-        setPageTitle(response.data.page_title);
-        setCategoryName(response.data.category_name);
-        setCategorySlug(response.data.category_slug);
-        setQuestions(response.data.question);
-        setAnswers(response.data.answers);
-      } else {
-        setQuestions(null);
-        setErrorMessage(response.data.message);
+      if (!response.data.success) {
+        toastError(response.data.message);
+        return setQuestions(null);
       }
+
+      // Only update state if data is different
+      setPageTitle((prev) =>
+        prev !== response.data.page_title ? response.data.page_title : prev
+      );
+      setCategoryName((prev) =>
+        prev !== response.data.category_name
+          ? response.data.category_name
+          : prev
+      );
+      setCategorySlug((prev) =>
+        prev !== response.data.category_slug
+          ? response.data.category_slug
+          : prev
+      );
+      setQuestions((prev) =>
+        JSON.stringify(prev) !== JSON.stringify(response.data.question)
+          ? response.data.question
+          : prev
+      );
+      setAnswers((prev) =>
+        JSON.stringify(prev) !== JSON.stringify(response.data.answers)
+          ? response.data.answers
+          : prev
+      );
+
       setLoading(false);
       setContentLoading(false);
     } catch (error) {
+      console.error("Error fetching question data:", error);
       setQuestions(null);
       setContentLoading(false);
     }
   };
 
-  const handleLike = async (qid) => {
+  const toggleLike = async (endpoint, target) => {
     try {
       const response = await api.post(
-        `question/like/`,
-        {
-          target: qid,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        endpoint,
+        { target },
+        { headers: { "Content-Type": "application/json" } }
       );
-      if (response.data.success) {
-        fetchData();
-      }
+      if (response.data.success) fetchData();
     } catch (error) {
       toastError("An error occurred.");
     }
   };
 
-  const handleAnswerLike = async (answer_id) => {
-    try {
-      const response = await api.post(
-        `answers/like/`,
-        {
-          target: answer_id,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.data.success) {
-        fetchData();
-      }
-    } catch (error) {
-      toastError("An error occurred.");
-    }
-  };
+  const handleLike = (qid) => toggleLike(`question/like/`, qid);
+  const handleAnswerLike = (answer_id) =>
+    toggleLike(`answers/like/`, answer_id);
 
   const handleComment = async (e, qid) => {
     e.preventDefault();
@@ -119,12 +113,12 @@ function Question() {
   useEffect(() => {
     setContentLoading(true);
     fetchData();
-  }, [slug]);
+  }, [slug, id]);
 
   return (
     <Wrapper>
       <section className="container sidebar-boxed py-4">
-        {loading && errorMessage === "" ? (
+        {loading ? (
           <div className="is-loading" style={{ height: "100vh" }}>
             <span>Loading...</span>
             <div className="progress-loading">
@@ -289,20 +283,7 @@ function Question() {
                                                 : "accepted"
                                             }
                                           >
-                                            <svg
-                                              role="img"
-                                              className="icon"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              width="24"
-                                              height="24"
-                                              viewBox="0 0 24 24"
-                                              ariaLabelledby="accept-icon"
-                                            >
-                                              <title id="accept-icon">
-                                                Accept answer
-                                              </title>
-                                              <polyline points="4 13 9 18 20 7"></polyline>
-                                            </svg>
+                                            <i className="far fa-check"></i>
                                           </Link>
                                         )}
                                     </div>
@@ -327,13 +308,7 @@ function Question() {
 
                                     <div className="answer-footer">
                                       <div className="upvote">
-                                        <svg
-                                          role="img"
-                                          className="icon icon--16"
-                                          viewBox="0 0 24 24"
-                                        >
-                                          <path d="M12,21 L10.55,19.7051771 C5.4,15.1242507 2,12.1029973 2,8.39509537 C2,5.37384196 4.42,3 7.5,3 C9.24,3 10.91,3.79455041 12,5.05013624 C13.09,3.79455041 14.76,3 16.5,3 C19.58,3 22,5.37384196 22,8.39509537 C22,12.1029973 18.6,15.1242507 13.45,19.7149864 L12,21 Z"></path>
-                                        </svg>
+                                        <i className="far fa-heart"></i>
                                         <span>{ans.likes_count}</span>
                                       </div>
                                       <div className="time">

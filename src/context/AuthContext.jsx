@@ -2,6 +2,15 @@ import { createContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../utils/useToast";
+import {
+  setUserData,
+  deleteToken,
+  deleteData,
+  setToken,
+  getToken,
+  getUserData,
+} from "../utils/vault";
+import dayjs from "dayjs";
 
 const baseURL = import.meta.env.VITE_API_URL;
 
@@ -9,112 +18,99 @@ const AuthContext = createContext();
 export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
-  const [authTokens, setAuthTokens] = useState(() =>
-    localStorage.getItem("authTokens")
-      ? JSON.parse(localStorage.getItem("authTokens"))
-      : null
-  );
-
-  const [user, setUser] = useState(() =>
-    localStorage.getItem("authTokens")
-      ? jwtDecode(localStorage.getItem("authTokens"))
-      : null
-  );
-
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const { toastSuccess, toastError } = useToast();
-
   const navigate = useNavigate();
 
   const loginUser = async (username, password) => {
-    const response = await fetch(`${baseURL}/token/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    });
-    const data = await response.json();
+    try {
+      const response = await fetch(`${baseURL}/token/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await response.json();
 
-    if (response.status === 200) {
-      setAuthTokens(data);
-      setUser(jwtDecode(data.access));
-      localStorage.setItem("authTokens", JSON.stringify(data));
-      navigate("/");
-      toastSuccess("Login successful.");
-    } else {
-      toastSuccess("Username and password doesn't exist.");
-      throw new Error(data.detail);
-    }
+      if (response.ok) {
+        const userData = jwtDecode(data.access);
+        await setUserData(userData);
+        await setToken(data);
+        setUser(userData);
+        navigate("/");
+        toastSuccess("Login successful.");
+      } else {
+        toastError(data.detail || "Invalid credentials.");
+        throw new Error(data.detail || "Login failed.");
+      }
+    } catch (error) {}
   };
 
   const registerUser = async (email, username, password, password2) => {
-    const response = await fetch(`${baseURL}/register/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        username,
-        password,
-        password2,
-      }),
-    });
-    if (response.status === 201) {
-      navigate("/login");
-      Swal.fire({
-        title: "Registration Successful, Login Now",
-        icon: "success",
-        toast: true,
-        timer: 6000,
-        position: "top-right",
-        timerProgressBar: true,
-        showConfirmButton: false,
+    try {
+      const response = await fetch(`${baseURL}/register/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, username, password, password2 }),
       });
-    } else {
-      Swal.fire({
-        title: "An Error Occured " + response.status,
-        icon: "error",
-        toast: true,
-        timer: 6000,
-        position: "top-right",
-        timerProgressBar: true,
-        showConfirmButton: false,
-      });
-    }
+      const data = await response.json();
+
+      if (response.ok) {
+        navigate("/login");
+        toastSuccess("Registration successful.");
+      } else {
+        toastError(data.detail || "Registration failed.");
+        throw new Error(data.detail || "Registration error.");
+      }
+    } catch (error) {}
   };
 
-  const logoutUser = () => {
-    setAuthTokens(null);
+  const logoutUser = async () => {
+    await deleteToken();
+    await deleteData();
     setUser(null);
-    localStorage.removeItem("authTokens");
     navigate("/login");
     toastSuccess("Logged out.");
   };
 
-  const contextData = {
-    user,
-    setUser,
-    authTokens,
-    setAuthTokens,
-    registerUser,
-    loginUser,
-    logoutUser,
+  const checkUser = async () => {
+    try {
+      const storedUser = await getUserData();
+      const tokens = await getToken();
+
+      if (storedUser) {
+        setUser(storedUser);
+      } else if (tokens?.access) {
+        const decoded = jwtDecode(tokens.access);
+        const isExpired = dayjs.unix(decoded.exp).diff(dayjs()) < 1;
+
+        if (!isExpired) {
+          setUser(decoded);
+        } else {
+          setUser(null);
+          await deleteToken();
+        }
+      } else {
+        setUser(null);
+      }
+    } catch (error) {
+      setUser(null);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
-    if (authTokens) {
-      setUser(jwtDecode(authTokens.access));
-    }
-    setLoading(false);
-  }, [authTokens, loading]);
+    (async () => await checkUser())();
+  }, []);
 
   return (
-    <AuthContext.Provider value={contextData}>
+    <AuthContext.Provider
+      value={{ user, setUser, registerUser, loginUser, logoutUser }}
+    >
       {loading ? null : children}
     </AuthContext.Provider>
   );

@@ -545,6 +545,11 @@ debug@^4.1.0, debug@^4.3.1:
   dependencies:
     ms "^2.1.3"
 
+deepvault@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/deepvault/-/deepvault-1.0.1.tgz#b898992e721ea01c03b8ff7da09c66b3d982cd95"
+  integrity sha512-W4QGp7e1TYzRkwtCRFhBYpj6rwO6NJPAPZjw8gSIorsqw1Jf/v52mkS5s42++egZHE0i48bwjN4YqXFhGAOPdg==
+
 delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
